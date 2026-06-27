@@ -1,0 +1,6 @@
+docscan==1.0.6
+rembg[gpu]
+python-doctr[torch]==1.0.1
+onnxruntime-gpu==1.19.2
+opencv-python-headless
+gradio>=6.19.0
