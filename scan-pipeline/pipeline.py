@@ -10,6 +10,7 @@ from doctr.models import ocr_predictor
 
 from image_transform import warp_to_source
 from overlay import overlay
+from extract_fields import extract_fields
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -20,7 +21,7 @@ model = None
 def get_model():
     global model
     if model is None:
-        model = ocr_predictor(pretrained=True).cuda() # remove .cuda() to use CPU. TODO This should be a flag
+        model = ocr_predictor(pretrained=True) # .cuda() remove .cuda() to use CPU. TODO This should be a flag
     return model
 
 # OCRs the page.
@@ -40,4 +41,5 @@ async def process_document(
     target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
 
     flat = warp_to_source(scan_img, source, target)
-    return flat, overlay(source, flat)
+    fields = await asyncio.to_thread(extract_fields, flat, source)
+    return flat, overlay(source, flat), fields
