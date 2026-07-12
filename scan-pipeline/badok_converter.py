@@ -16,7 +16,7 @@ def convert_to_badok(
     for badok_name, metadata in FIELD_SCHEMA.items():
         values[badok_name] = metadata["default"]
 
-    # defaults with OCR results
+    #  rewrite defaults with OCR results
     for field_name, value in extracted_fields.items():
         if field_name in values:
             values[field_name] = value
