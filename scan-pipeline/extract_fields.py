@@ -1,8 +1,10 @@
 import json
+from concurrent.futures import ThreadPoolExecutor
+
 import cv2
 import numpy as np
 
-from ocr_backends import ocr
+from ocr_backends import ocr, workers
 
 # Extract bounding boxes for all text fields from source.json.
 def get_field_boxes(source: dict) -> dict:
@@ -30,13 +32,21 @@ def crop(image: np.ndarray, box: tuple) -> np.ndarray:
     return image[y0:y1, x0:x1]
 
 # Takes aligned image and source JSON, returns extracted field dict.
-# Output keys are the field_key names from source.json
+# Output keys are the field_key names from source.json. Fields are OCR'd
+# concurrently (see ocr_backends.workers()) since each is an independent
+# crop; this is what actually lets a multi-slot Ollama/vLLM server buy any
+# speedup, since otherwise requests would go out one at a time regardless
+# of how much concurrency the server can handle.
 def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
     boxes = get_field_boxes(source)
+    field_keys = list(boxes.keys())
+    crops = [crop(aligned_image, boxes[field_key]) for field_key in field_keys]
+
+    with ThreadPoolExecutor(max_workers=workers()) as pool:
+        texts = pool.map(ocr, crops)
 
     output = {}
-    for field_key, box in boxes.items():
-        text = ocr(crop(aligned_image, box))
+    for field_key, text in zip(field_keys, texts):
         output[field_key] = text
         print(f"{field_key}: '{text}'")
     return output
