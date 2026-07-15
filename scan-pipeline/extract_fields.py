@@ -1,16 +1,8 @@
 import json
 import cv2
 import numpy as np
-from doctr.io import DocumentFile
-from doctr.models import ocr_predictor
 
-model = None
-
-def get_model():
-    global model
-    if model is None:
-        model = ocr_predictor(pretrained=True)
-    return model
+from ocr_backends import ocr
 
 # Extract bounding boxes for all text fields from source.json.
 def get_field_boxes(source: dict) -> dict:
@@ -37,22 +29,6 @@ def crop(image: np.ndarray, box: tuple) -> np.ndarray:
     y1 = min(image.shape[0], y1)
     return image[y0:y1, x0:x1]
 
-# Run OCR on an already-cropped image region.
-def ocr(image_crop: np.ndarray) -> str:
-    if image_crop.size == 0:
-        return ""
-    _, buf = cv2.imencode(".jpg", image_crop)
-    doc = DocumentFile.from_images(buf.tobytes())
-    result = get_model()(doc)
-    words = [
-        word.value
-        for page in result.pages
-        for block in page.blocks
-        for line in block.lines
-        for word in line.words
-    ]
-    return " ".join(words).strip()
-
 # Takes aligned image and source JSON, returns extracted field dict.
 # Output keys are the field_key names from source.json
 def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
@@ -60,7 +36,7 @@ def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
 
     output = {}
     for field_key, box in boxes.items():
-        text = ocr(crop(aligned_image, box))
+        text = ocr(crop(aligned_image, box), field_key)
         output[field_key] = text
         print(f"{field_key}: '{text}'")
     return output
