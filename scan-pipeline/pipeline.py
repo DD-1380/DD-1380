@@ -11,6 +11,7 @@ from doctr.models import ocr_predictor
 from image_transform import warp_to_source
 from overlay import overlay
 from extract_fields import extract_fields
+from llm_cleanup import clean_fields_with_llm
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -33,7 +34,8 @@ def ocr_page(model, image_bytes: bytes) -> dict:
 async def process_document(
     source: dict,
     raw_bytes: bytes,
-) -> tuple[np.ndarray, np.ndarray]:
+    use_llm: bool = True,
+) -> tuple[np.ndarray, np.ndarray, dict]:
     scan_bytes = await asyncio.to_thread(scan, raw_bytes)
     scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
 
@@ -41,5 +43,17 @@ async def process_document(
     target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
 
     flat = warp_to_source(scan_img, source, target)
-    fields = await asyncio.to_thread(extract_fields, flat, source)
+    raw_fields = await asyncio.to_thread(extract_fields, flat, source)
+
+    if use_llm:
+        try:
+            fields = await asyncio.to_thread(clean_fields_with_llm, raw_fields)
+        except RuntimeError as e:
+            # Most likely a missing OPENAI_API_KEY. Soft fail and
+            # return raw OCR rather than crashing the whole request.
+            print(f"Warning: LLM cleanup skipped ({e})")
+            fields = raw_fields
+    else:
+        fields = raw_fields
+
     return flat, overlay(source, flat), fields
