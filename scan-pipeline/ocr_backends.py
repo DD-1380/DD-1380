@@ -42,12 +42,6 @@ def ocr(image_crop: np.ndarray) -> str:
     backend = os.environ.get("OCR_BACKEND", "doctr")
     return BACKENDS[backend](image_crop)
 
-# How many fields extract_fields() should OCR concurrently. The doctr
-# backend holds one shared torch model instance, so concurrent calls would
-# just contend for the same GPU/CPU session with no benefit; the llm backend
-# is a blocking HTTP call, so multiple in flight at once (bounded by the
-# server's OLLAMA_NUM_PARALLEL / vLLM concurrency) is a straightforward
-# throughput win. Override with OCR_LLM_WORKERS.
 def workers() -> int:
     backend = os.environ.get("OCR_BACKEND", "doctr")
     if backend == "llm":

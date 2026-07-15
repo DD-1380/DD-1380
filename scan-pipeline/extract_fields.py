@@ -32,11 +32,7 @@ def crop(image: np.ndarray, box: tuple) -> np.ndarray:
     return image[y0:y1, x0:x1]
 
 # Takes aligned image and source JSON, returns extracted field dict.
-# Output keys are the field_key names from source.json. Fields are OCR'd
-# concurrently (see ocr_backends.workers()) since each is an independent
-# crop; this is what actually lets a multi-slot Ollama/vLLM server buy any
-# speedup, since otherwise requests would go out one at a time regardless
-# of how much concurrency the server can handle.
+# Output keys are the field_key names from source.json
 def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
     boxes = get_field_boxes(source)
     field_keys = list(boxes.keys())
