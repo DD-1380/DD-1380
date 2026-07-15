@@ -45,6 +45,7 @@ def ocr(image_crop: np.ndarray) -> str:
     response = get_client().chat.completions.create(
         model=get_model(),
         temperature=0,
+        max_tokens=int(os.environ.get("OCR_LLM_MAX_TOKENS", "64")),
         messages=[
             {
                 "role": "user",
@@ -57,6 +58,9 @@ def ocr(image_crop: np.ndarray) -> str:
                 ],
             }
         ],
+        extra_body={
+            "reasoning_effort": os.environ.get("OCR_LLM_REASONING_EFFORT", "none"),
+        },
     )
     text = (response.choices[0].message.content or "").strip()
     return text.strip('"').strip()
