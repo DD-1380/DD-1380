@@ -1,15 +1,3 @@
-"""Second-pass field OCR backends.
-
-extract_fields.py crops each field out of the aligned image and calls
-ocr() on the crop. The backend used for that per-field OCR is selected via
-the OCR_BACKEND env var:
-
-  OCR_BACKEND=doctr (default) - local doctr text recognition model.
-  OCR_BACKEND=llm             - Gemma 4 vision-language model served over an
-                                 OpenAI-compatible endpoint (Ollama or vLLM).
-                                 See llm_ocr.py for connection settings.
-"""
-
 import os
 
 import numpy as np
@@ -23,7 +11,6 @@ def get_doctr_model():
         doctr_model = ocr_predictor(pretrained=True)
     return doctr_model
 
-# Run second-pass OCR on an already-cropped image region using doctr.
 def ocr_doctr(image_crop: np.ndarray) -> str:
     import cv2
     from doctr.io import DocumentFile
@@ -40,10 +27,6 @@ def ocr_doctr(image_crop: np.ndarray) -> str:
     ]
     return " ".join(words).strip()
 
-# Run second-pass OCR on an already-cropped image region using a Gemma 4
-# vision-language model served over an OpenAI-compatible endpoint (Ollama or
-# vLLM). Imported lazily so the `openai` dependency and a reachable server
-# are only required when this backend is selected.
 def ocr_llm(image_crop: np.ndarray) -> str:
     import llm_ocr
     return llm_ocr.ocr(image_crop)
@@ -53,8 +36,6 @@ BACKENDS = {
     "llm": ocr_llm,
 }
 
-# Run second-pass OCR on an already-cropped image region using the backend
-# configured by the OCR_BACKEND env var.
 def ocr(image_crop: np.ndarray) -> str:
     if image_crop.size == 0:
         return ""

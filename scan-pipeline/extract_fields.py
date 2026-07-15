@@ -36,7 +36,7 @@ def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
 
     output = {}
     for field_key, box in boxes.items():
-        text = ocr(crop(aligned_image, box), field_key)
+        text = ocr(crop(aligned_image, box))
         output[field_key] = text
         print(f"{field_key}: '{text}'")
     return output
