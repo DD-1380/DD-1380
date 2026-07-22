@@ -12,6 +12,7 @@ from image_transform import warp_to_source
 from overlay import overlay
 from extract_fields import extract_fields
 from checkbox_crop import classify_checkbox, is_checkbox_field
+from converter import convert_to_badok
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -59,4 +60,5 @@ async def process_document(
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
     fields = await asyncio.to_thread(extract_fields, flat, source)
+    badok = convert_to_badok(fields)
     return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
