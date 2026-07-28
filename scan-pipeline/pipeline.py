@@ -10,7 +10,7 @@ from doctr.models import ocr_predictor
 
 from image_transform import warp_to_source
 from overlay import overlay
-from extract_fields import extract_fields
+from extract_fields_trocr import extract_fields
 from llm_cleanup import clean_fields_with_llm
 
 HERE = Path(__file__).parent
@@ -18,7 +18,7 @@ os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
 
 model = None
 
-# gets the OCR model.
+# gets the OCR model
 def get_model():
     global model
     if model is None:
