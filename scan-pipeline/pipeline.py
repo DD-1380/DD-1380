@@ -19,7 +19,7 @@ os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
 
 model = None
 
-# gets the OCR model.
+# gets the OCR model
 def get_model():
     global model
     if model is None:
