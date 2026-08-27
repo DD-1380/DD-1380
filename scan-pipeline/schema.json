@@ -1,0 +1,690 @@
+{
+    "BATTLE_ROSTER_NUMBER_PG1": {
+        "label": "Battle Roster Number (Front)",
+        "type": "str"
+    },
+    "CB_EVAC_URGENT_PG1": {
+        "label": "Urgent Evacuation (Front)",
+        "type": "bool"
+    },
+    "CB_EVAC_PRIORITY_PG1": {
+        "label": "Priority Evacuation (Front)",
+        "type": "bool"
+    },
+    "CB_EVAC_ROUTINE_PG1": {
+        "label": "Routine Evacuation (Front)",
+        "type": "bool"
+    },
+    "NAME": {
+        "label": "Patient Name",
+        "type": "str"
+    },
+    "SSN_LAST4": {
+        "label": "SSN Last 4",
+        "type": "str"
+    },
+    "DATE": {
+        "label": "Date",
+        "type": "str"
+    },
+    "TIME": {
+        "label": "Time",
+        "type": "str"
+    },
+    "CB_GENDER_MALE": {
+        "label": "Gender - Male",
+        "type": "bool"
+    },
+    "CB_GENDER_FEMALE": {
+        "label": "Gender - Female",
+        "type": "bool"
+    },
+    "SERVICE": {
+        "label": "Service Branch",
+        "type": "str"
+    },
+    "UNIT": {
+        "label": "Unit",
+        "type": "str"
+    },
+    "ALLERGIES": {
+        "label": "Allergies",
+        "type": "str"
+    },
+    "CB_MECHANISM_ARTILLERY": {
+        "label": "Mechanism - Artillery",
+        "type": "bool"
+    },
+    "CB_MECHANISM_BLUNT": {
+        "label": "Mechanism - Blunt",
+        "type": "bool"
+    },
+    "CB_MECHANISM_BURN": {
+        "label": "Mechanism - Burn",
+        "type": "bool"
+    },
+    "CB_MECHANISM_FALL": {
+        "label": "Mechanism - Fall",
+        "type": "bool"
+    },
+    "CB_MECHANISM_GRENADE": {
+        "label": "Mechanism - Grenade",
+        "type": "bool"
+    },
+    "CB_MECHANISM_GSW": {
+        "label": "Mechanism - GSW",
+        "type": "bool"
+    },
+    "CB_MECHANISM_IED": {
+        "label": "Mechanism - IED",
+        "type": "bool"
+    },
+    "CB_MECHANISM_LANDMINE": {
+        "label": "Mechanism - Landmine",
+        "type": "bool"
+    },
+    "CB_MECHANISM_MVC": {
+        "label": "Mechanism - MVC",
+        "type": "bool"
+    },
+    "CB_MECHANISM_RPG": {
+        "label": "Mechanism - RPG",
+        "type": "bool"
+    },
+    "CB_MECHANISM_OTHER": {
+        "label": "Mechanism - Other",
+        "type": "bool"
+    },
+    "MECHANISM_OTHER": {
+        "label": "Other Mechanism Description",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_BACK_TOP_LEFT": {
+        "label": "Injury - Back Top Left",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_BACK_TOP_RIGHT": {
+        "label": "Injury - Back Top Right",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_FRONT_TOP_RIGHT": {
+        "label": "Injury - Front Top Right",
+        "type": "str"
+    },
+    "INJURY_HEAD": {
+        "label": "Injury - Head",
+        "type": "bool"
+    },
+    "INJURY_IDENTIFIER_FRONT_TOP_LEFT": {
+        "label": "Injury - Front Top Left",
+        "type": "str"
+    },
+    "INJURY_HEAD_BACK": {
+        "label": "Injury - Head Back",
+        "type": "bool"
+    },
+    "TQ_RIGHT_ARM_TYPE": {
+        "label": "Tourniquet Right Arm Type",
+        "type": "str"
+    },
+    "TQ_LEFT_ARM_TYPE": {
+        "label": "Tourniquet Left Arm Type",
+        "type": "str"
+    },
+    "TQ_RIGHT_ARM_TIME": {
+        "label": "Tourniquet Right Arm Time",
+        "type": "str"
+    },
+    "TQ_LEFT_ARM_TIME": {
+        "label": "Tourniquet Left Arm Time",
+        "type": "str"
+    },
+    "INJURY_BODY_BACK": {
+        "label": "Injury - Body Back",
+        "type": "bool"
+    },
+    "INJURY_UPPER_RIGHT_ARM": {
+        "label": "Injury - Upper Right Arm",
+        "type": "bool"
+    },
+    "INJURY_BODY": {
+        "label": "Injury - Body",
+        "type": "bool"
+    },
+    "INJURY_UPPER_LEFT_ARM": {
+        "label": "Injury - Upper Left Arm",
+        "type": "bool"
+    },
+    "INJURY_UPPER_LEFT_ARM_BACK": {
+        "label": "Injury - Upper Left Arm Back",
+        "type": "bool"
+    },
+    "INJURY_UPPER_RIGHT_ARM_BACK": {
+        "label": "Injury - Upper Right Arm Back",
+        "type": "bool"
+    },
+    "INJURY_IDENTIFIER_BACK_RIGHT": {
+        "label": "Injury - Back Right",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_FRONT_RIGHT": {
+        "label": "Injury - Front Right",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_FRONT_LEFT": {
+        "label": "Injury - Front Left",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_BACK_LEFT": {
+        "label": "Injury - Back Left",
+        "type": "str"
+    },
+    "INJURY_LOWER_RIGHT_ARM": {
+        "label": "Injury - Lower Right Arm",
+        "type": "bool"
+    },
+    "INJURY_LOWER_LEFT_ARM": {
+        "label": "Injury - Lower Left Arm",
+        "type": "bool"
+    },
+    "INJURY_LOWER_LEFT_ARM_BACK": {
+        "label": "Injury - Lower Left Arm Back",
+        "type": "bool"
+    },
+    "INJURY_LOWER_RIGHT_ARM_BACK": {
+        "label": "Injury - Lower Right Arm Back",
+        "type": "bool"
+    },
+    "INJURY_GROIN_BACK": {
+        "label": "Injury - Groin Back",
+        "type": "bool"
+    },
+    "INJURY_GROIN": {
+        "label": "Injury - Groin",
+        "type": "bool"
+    },
+    "INJURY_UPPER_LEFT_LEG": {
+        "label": "Injury - Upper Left Leg",
+        "type": "bool"
+    },
+    "INJURY_UPPER_LEFT_LEG_BACK": {
+        "label": "Injury - Upper Left Leg Back",
+        "type": "bool"
+    },
+    "INJURY_UPPER_RIGHT_LEG_BACK": {
+        "label": "Injury - Upper Right Leg Back",
+        "type": "bool"
+    },
+    "INJURY_UPPER_RIGHT_LEG": {
+        "label": "Injury - Upper Right Leg",
+        "type": "bool"
+    },
+    "INJURY_LOWER_RIGHT_LEG": {
+        "label": "Injury - Lower Right Leg",
+        "type": "bool"
+    },
+    "INJURY_LOWER_LEFT_LEG": {
+        "label": "Injury - Lower Left Leg",
+        "type": "bool"
+    },
+    "INJURY_LOWER_LEFT_LEG_BACK": {
+        "label": "Injury - Lower Left Leg Back",
+        "type": "bool"
+    },
+    "INJURY_LOWER_RIGHT_LEG_BACK": {
+        "label": "Injury - Lower Right Leg Back",
+        "type": "bool"
+    },
+    "INJURY_IDENTIFIER_BACK_LOWER_RIGHT": {
+        "label": "Injury - Back Lower Right",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_FRONT_LOWER_LEFT": {
+        "label": "Injury - Front Lower Left",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_BACK_LOWER_LEFT": {
+        "label": "Injury - Back Lower Left",
+        "type": "str"
+    },
+    "INJURY_IDENTIFIER_FRONT_LOWER_RIGHT": {
+        "label": "Injury - Front Lower Right",
+        "type": "str"
+    },
+    "TQ_RIGHT_LEG_TYPE": {
+        "label": "Tourniquet Right Leg Type",
+        "type": "str"
+    },
+    "TQ_LEFT_LEG_TYPE": {
+        "label": "Tourniquet Left Leg Type",
+        "type": "str"
+    },
+    "TQ_LEFT_LEG_TIME": {
+        "label": "Tourniquet Left Leg Time",
+        "type": "str"
+    },
+    "TQ_RIGHT_LEG_TIME": {
+        "label": "Tourniquet Right Leg Time",
+        "type": "str"
+    },
+    "SS_TIME_1": {
+        "label": "Signs/Symptoms Time 1",
+        "type": "str"
+    },
+    "SS_TIME_2": {
+        "label": "Signs/Symptoms Time 2",
+        "type": "str"
+    },
+    "SS_TIME_3": {
+        "label": "Signs/Symptoms Time 3",
+        "type": "str"
+    },
+    "SS_TIME_4": {
+        "label": "Signs/Symptoms Time 4",
+        "type": "str"
+    },
+    "SS_PULSE_1": {
+        "label": "Pulse 1",
+        "type": "str"
+    },
+    "SS_PULSE_2": {
+        "label": "Pulse 2",
+        "type": "str"
+    },
+    "SS_PULSE_3": {
+        "label": "Pulse 3",
+        "type": "str"
+    },
+    "SS_PULSE_4": {
+        "label": "Pulse 4",
+        "type": "str"
+    },
+    "SS_BP_1": {
+        "label": "Blood Pressure 1",
+        "type": "str"
+    },
+    "SS_BP_2": {
+        "label": "Blood Pressure 2",
+        "type": "str"
+    },
+    "SS_BP_3": {
+        "label": "Blood Pressure 3",
+        "type": "str"
+    },
+    "SS_BP_4": {
+        "label": "Blood Pressure 4",
+        "type": "str"
+    },
+    "SS_RESP_1": {
+        "label": "Respirations 1",
+        "type": "str"
+    },
+    "SS_RESP_2": {
+        "label": "Respirations 2",
+        "type": "str"
+    },
+    "SS_RESP_3": {
+        "label": "Respirations 3",
+        "type": "str"
+    },
+    "SS_RESP_4": {
+        "label": "Respirations 4",
+        "type": "str"
+    },
+    "SS_PULSEOX_1": {
+        "label": "Pulse Oximetry 1",
+        "type": "str"
+    },
+    "SS_PULSEOX_2": {
+        "label": "Pulse Oximetry 2",
+        "type": "str"
+    },
+    "SS_PULSEOX_3": {
+        "label": "Pulse Oximetry 3",
+        "type": "str"
+    },
+    "SS_PULSEOX_4": {
+        "label": "Pulse Oximetry 4",
+        "type": "str"
+    },
+    "SS_AVPU_1": {
+        "label": "AVPU 1",
+        "type": "str"
+    },
+    "SS_AVPU_2": {
+        "label": "AVPU 2",
+        "type": "str"
+    },
+    "SS_AVPU_3": {
+        "label": "AVPU 3",
+        "type": "str"
+    },
+    "SS_AVPU_4": {
+        "label": "AVPU 4",
+        "type": "str"
+    },
+    "SS_PAIN_1": {
+        "label": "Pain Score 1",
+        "type": "str"
+    },
+    "SS_PAIN_2": {
+        "label": "Pain Score 2",
+        "type": "str"
+    },
+    "SS_PAIN_3": {
+        "label": "Pain Score 3",
+        "type": "str"
+    },
+    "SS_PAIN_4": {
+        "label": "Pain Score 4",
+        "type": "str"
+    },
+    "BATTLE_ROSTER_NUMBER_PG2": {
+        "label": "Battle Roster Number (Back)",
+        "type": "str"
+    },
+    "CB_EVAC_URGENT_PG2": {
+        "label": "Urgent Evacuation (Back)",
+        "type": "bool"
+    },
+    "CB_EVAC_PRIORITY_PG2": {
+        "label": "Priority Evacuation (Back)",
+        "type": "bool"
+    },
+    "CB_EVAC_ROUTINE_PG2": {
+        "label": "Routine Evacuation (Back)",
+        "type": "bool"
+    },
+    "TQ_TYPE": {
+        "label": "Tourniquet Type",
+        "type": "str"
+    },
+    "CB_TQ_EXTREMITY": {
+        "label": "Tourniquet - Extremity",
+        "type": "bool"
+    },
+    "CB_TQ_JUNCTIONAL": {
+        "label": "Tourniquet - Junctional",
+        "type": "bool"
+    },
+    "CB_TQ_TRUNCAL": {
+        "label": "Tourniquet - Truncal",
+        "type": "bool"
+    },
+    "DRESSING_TYPE": {
+        "label": "Dressing Type",
+        "type": "str"
+    },
+    "CB_DRESSING_HEMOSTATIC": {
+        "label": "Dressing - Hemostatic",
+        "type": "bool"
+    },
+    "CB_DRESSING_PRESSURE": {
+        "label": "Dressing - Pressure",
+        "type": "bool"
+    },
+    "CB_DRESSING_OTHER": {
+        "label": "Dressing - Other",
+        "type": "bool"
+    },
+    "AIRWAY_TYPE": {
+        "label": "Airway Type",
+        "type": "str"
+    },
+    "CB_AIRWAY_INTACT": {
+        "label": "Airway - Intact",
+        "type": "bool"
+    },
+    "CB_AIRWAY_NPA": {
+        "label": "Airway - NPA",
+        "type": "bool"
+    },
+    "CB_AIRWAY_CRIC": {
+        "label": "Airway - Cricothyroidotomy",
+        "type": "bool"
+    },
+    "CB_AIRWAY_ET_TUBE": {
+        "label": "Airway - ET Tube",
+        "type": "bool"
+    },
+    "CB_AIRWAY_SGA": {
+        "label": "Airway - SGA",
+        "type": "bool"
+    },
+    "CB_BREATHING_O2": {
+        "label": "Breathing - O2",
+        "type": "bool"
+    },
+    "CB_BREATHING_NEEDLE_D": {
+        "label": "Breathing - Needle Decompression",
+        "type": "bool"
+    },
+    "CB_BREATHING_CHEST_SEAL": {
+        "label": "Breathing - Chest Seal",
+        "type": "bool"
+    },
+    "BREATHING_TYPE": {
+        "label": "Breathing Type",
+        "type": "str"
+    },
+    "CB_BREATHING_CHEST_TUBE": {
+        "label": "Breathing - Chest Tube",
+        "type": "bool"
+    },
+    "FLUID_NAME_1": {
+        "label": "Fluid Name 1",
+        "type": "str"
+    },
+    "FLUID_VOLUME_1": {
+        "label": "Fluid Volume 1",
+        "type": "str"
+    },
+    "FLUID_ROUTE_1": {
+        "label": "Fluid Route 1",
+        "type": "str"
+    },
+    "FLUID_TIME_1": {
+        "label": "Fluid Time 1",
+        "type": "str"
+    },
+    "FLUID_NAME_2": {
+        "label": "Fluid Name 2",
+        "type": "str"
+    },
+    "FLUID_VOLUME_2": {
+        "label": "Fluid Volume 2",
+        "type": "str"
+    },
+    "FLUID_ROUTE_2": {
+        "label": "Fluid Route 2",
+        "type": "str"
+    },
+    "FLUID_TIME_2": {
+        "label": "Fluid Time 2",
+        "type": "str"
+    },
+    "BLOODPRODUCT_NAME_1": {
+        "label": "Blood Product Name 1",
+        "type": "str"
+    },
+    "BLOODPRODUCT_VOLUME_1": {
+        "label": "Blood Product Volume 1",
+        "type": "str"
+    },
+    "BLOODPRODUCT_ROUTE_1": {
+        "label": "Blood Product Route 1",
+        "type": "str"
+    },
+    "BLOODPRODUCT_TIME_1": {
+        "label": "Blood Product Time 1",
+        "type": "str"
+    },
+    "BLOODPRODUCT_NAME_2": {
+        "label": "Blood Product Name 2",
+        "type": "str"
+    },
+    "BLOODPRODUCT_VOLUME_2": {
+        "label": "Blood Product Volume 2",
+        "type": "str"
+    },
+    "BLOODPRODUCT_ROUTE_2": {
+        "label": "Blood Product Route 2",
+        "type": "str"
+    },
+    "BLOODPRODUCT_TIME_2": {
+        "label": "Blood Product Time 2",
+        "type": "str"
+    },
+    "ANALGESIC_NAME_1": {
+        "label": "Analgesic Name 1",
+        "type": "str"
+    },
+    "ANALGESIC_DOSE_1": {
+        "label": "Analgesic Dose 1",
+        "type": "str"
+    },
+    "ANALGESIC_ROUTE_1": {
+        "label": "Analgesic Route 1",
+        "type": "str"
+    },
+    "ANALGESIC_TIME_1": {
+        "label": "Analgesic Time 1",
+        "type": "str"
+    },
+    "ANALGESIC_NAME_2": {
+        "label": "Analgesic Name 2",
+        "type": "str"
+    },
+    "ANALGESIC_DOSE_2": {
+        "label": "Analgesic Dose 2",
+        "type": "str"
+    },
+    "ANALGESIC_ROUTE_2": {
+        "label": "Analgesic Route 2",
+        "type": "str"
+    },
+    "ANALGESIC_TIME_2": {
+        "label": "Analgesic Time 2",
+        "type": "str"
+    },
+    "ANALGESIC_NAME_3": {
+        "label": "Analgesic Name 3",
+        "type": "str"
+    },
+    "ANALGESIC_DOSE_3": {
+        "label": "Analgesic Dose 3",
+        "type": "str"
+    },
+    "ANALGESIC_ROUTE_3": {
+        "label": "Analgesic Route 3",
+        "type": "str"
+    },
+    "ANALGESIC_TIME_3": {
+        "label": "Analgesic Time 3",
+        "type": "str"
+    },
+    "ANTIBIOTIC_NAME_1": {
+        "label": "Antibiotic Name 1",
+        "type": "str"
+    },
+    "ANTIBIOTIC_DOSE_1": {
+        "label": "Antibiotic Dose 1",
+        "type": "str"
+    },
+    "ANTIBIOTIC_ROUTE_1": {
+        "label": "Antibiotic Route 1",
+        "type": "str"
+    },
+    "ANTIBIOTIC_TIME_1": {
+        "label": "Antibiotic Time 1",
+        "type": "str"
+    },
+    "ANTIBIOTIC_NAME_2": {
+        "label": "Antibiotic Name 2",
+        "type": "str"
+    },
+    "ANTIBIOTIC_DOSE_2": {
+        "label": "Antibiotic Dose 2",
+        "type": "str"
+    },
+    "ANTIBIOTIC_ROUTE_2": {
+        "label": "Antibiotic Route 2",
+        "type": "str"
+    },
+    "ANTIBIOTIC_TIME_2": {
+        "label": "Antibiotic Time 2",
+        "type": "str"
+    },
+    "OTHERMED_NAME_1": {
+        "label": "Other Medication Name 1",
+        "type": "str"
+    },
+    "OTHERMED_DOSE_1": {
+        "label": "Other Medication Dose 1",
+        "type": "str"
+    },
+    "OTHERMED_ROUTE_1": {
+        "label": "Other Medication Route 1",
+        "type": "str"
+    },
+    "OTHERMED_TIME_1": {
+        "label": "Other Medication Time 1",
+        "type": "str"
+    },
+    "OTHERMED_NAME_2": {
+        "label": "Other Medication Name 2",
+        "type": "str"
+    },
+    "OTHERMED_DOSE_2": {
+        "label": "Other Medication Dose 2",
+        "type": "str"
+    },
+    "OTHERMED_ROUTE_2": {
+        "label": "Other Medication Route 2",
+        "type": "str"
+    },
+    "OTHERMED_TIME_2": {
+        "label": "Other Medication Time 2",
+        "type": "str"
+    },
+    "CB_COMBAT_PILL_PACK": {
+        "label": "Combat Pill Pack",
+        "type": "bool"
+    },
+    "CB_EYE_SHIELD": {
+        "label": "Eye Shield",
+        "type": "bool"
+    },
+    "CB_EYE_SHIELD_RIGHT": {
+        "label": "Eye Shield - Right",
+        "type": "bool"
+    },
+    "CB_EYE_SHIELD_LEFT": {
+        "label": "Eye Shield - Left",
+        "type": "bool"
+    },
+    "CB_SPLINT": {
+        "label": "Splint Applied",
+        "type": "bool"
+    },
+    "HYPOTHERMIA_PREVENTION_TYPE": {
+        "label": "Hypothermia Prevention Type",
+        "type": "str"
+    },
+    "CB_HYPOTHERMIA_PREVENTION": {
+        "label": "Hypothermia Prevention Applied",
+        "type": "bool"
+    },
+    "NOTES": {
+        "label": "Notes",
+        "type": "str"
+    },
+    "FIRST_RESPONDER_LAST4": {
+        "label": "First Responder Last 4 SSN",
+        "type": "str"
+    },
+    "FIRST_RESPONDER_NAME": {
+        "label": "First Responder Name",
+        "type": "str"
+    }
+}
