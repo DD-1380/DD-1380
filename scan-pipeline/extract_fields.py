@@ -39,7 +39,7 @@ def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
     crops = [crop(aligned_image, boxes[field_key]) for field_key in field_keys]
 
     with ThreadPoolExecutor(max_workers=workers()) as pool:
-        texts = pool.map(ocr, crops)
+        texts = pool.map(ocr, crops, field_keys)
 
     output = {}
     for field_key, text in zip(field_keys, texts):

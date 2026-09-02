@@ -15,6 +15,17 @@ PROMPT = (
     "no legible text, return an empty string."
 )
 
+
+def prompt_for(context: str | None = None) -> str:
+    if not context:
+        return PROMPT
+    return (
+        f"{PROMPT} This crop is form field '{context}'. Use the field name "
+        "only as a hint for expected format; never invent or complete text "
+        "that is not visible in the image."
+    )
+
+
 client = None
 
 
@@ -38,7 +49,7 @@ def crop_to_data_url(image_crop: np.ndarray) -> str:
     return f"data:image/jpeg;base64,{b64}"
 
 
-def ocr(image_crop: np.ndarray) -> str:
+def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
     if image_crop.size == 0:
         return ""
 
@@ -50,7 +61,7 @@ def ocr(image_crop: np.ndarray) -> str:
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": PROMPT},
+                    {"type": "text", "text": prompt_for(context)},
                     {
                         "type": "image_url",
                         "image_url": {"url": crop_to_data_url(image_crop)},
@@ -70,4 +81,5 @@ if __name__ == "__main__":
     import sys
 
     image = cv2.imread(sys.argv[1])
-    print(ocr(image))
+    context = sys.argv[2] if len(sys.argv) > 2 else None
+    print(ocr(image, context))

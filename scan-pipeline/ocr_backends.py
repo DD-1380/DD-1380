@@ -27,19 +27,21 @@ def ocr_doctr(image_crop: np.ndarray) -> str:
     ]
     return " ".join(words).strip()
 
-def ocr_llm(image_crop: np.ndarray) -> str:
+def ocr_llm(image_crop: np.ndarray, context: str | None = None) -> str:
     import llm_ocr
-    return llm_ocr.ocr(image_crop)
+    return llm_ocr.ocr(image_crop, context)
 
 BACKENDS = {
     "doctr": ocr_doctr,
     "llm": ocr_llm,
 }
 
-def ocr(image_crop: np.ndarray) -> str:
+def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
     if image_crop.size == 0:
         return ""
     backend = os.environ.get("OCR_BACKEND", "doctr")
+    if backend == "llm":
+        return BACKENDS[backend](image_crop, context)
     return BACKENDS[backend](image_crop)
 
 def workers() -> int:
