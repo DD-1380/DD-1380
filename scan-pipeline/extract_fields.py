@@ -8,27 +8,23 @@ from ocr_backends import ocr, workers
 
 # Extract bounding boxes for all text fields from source.json.
 def get_field_boxes(source: dict) -> dict:
-    h, w = source["dimensions"]
     boxes = {}
     for block in source["blocks"]:
         for line in block["lines"]:
             for word in line["words"]:
                 value = word["value"]
                 if value.startswith("field_") and not value.startswith("field_image_"):
-                    (x0, y0), (x1, y1) = word["geometry"]
-                    boxes[value] = (
-                        int(x0 * w), int(y0 * h),
-                        int(x1 * w), int(y1 * h)
-                    )
+                    boxes[value] = word["geometry"]
     return boxes
 
 # Crop a region from the aligned image.
 def crop(image: np.ndarray, box: tuple) -> np.ndarray:
-    x0, y0, x1, y1 = box
-    x0 = max(0, x0)
-    y0 = max(0, y0)
-    x1 = min(image.shape[1], x1)
-    y1 = min(image.shape[0], y1)
+    h, w = image.shape[:2]
+    (x0, y0), (x1, y1) = box
+    x0 = max(0, int(x0 * w))
+    y0 = max(0, int(y0 * h))
+    x1 = min(w, int(x1 * w))
+    y1 = min(h, int(y1 * h))
     return image[y0:y1, x0:x1]
 
 # Takes aligned image and source JSON, returns extracted field dict.

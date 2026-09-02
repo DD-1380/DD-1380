@@ -14,7 +14,9 @@ def display_label(value: str) -> str:
 
 
 def overlay(page, image):
-    h, w = page["dimensions"]
+    h, w = image.shape[:2]
+    ref_h, ref_w = page["dimensions"]
+    render_scale = w / ref_w if ref_w else 1.0
     vis = image.copy()
 
     words = (
@@ -34,15 +36,16 @@ def overlay(page, image):
         color = FIELD_IMAGE_COLOR if value.startswith("field_image") else FIELD_COLOR
         label = display_label(value)
 
-        MIN_SCALE = 0.25
-        MAX_SCALE = 0.45
-        CHAR_WIDTH_PX = 7
-        MIN_TEXT_Y = 12
-        TEXT_Y_OFFSET = 2
+        MIN_SCALE = 0.25 * render_scale
+        MAX_SCALE = 0.45 * render_scale
+        CHAR_WIDTH_PX = 7 * render_scale
+        MIN_TEXT_Y = 12 * render_scale
+        TEXT_Y_OFFSET = 2 * render_scale
         scale = max(MIN_SCALE, min(MAX_SCALE, (px1 - px0) / max(len(label) * CHAR_WIDTH_PX, 1)))
-        text_y = max(MIN_TEXT_Y, py0 - TEXT_Y_OFFSET)
+        text_y = int(max(MIN_TEXT_Y, py0 - TEXT_Y_OFFSET))
+        thickness = max(1, round(render_scale))
 
-        cv2.rectangle(vis, (px0, py0), (px1, py1), color, 1)
-        cv2.putText(vis, label, (px0, text_y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, 1, cv2.LINE_AA)
+        cv2.rectangle(vis, (px0, py0), (px1, py1), color, thickness)
+        cv2.putText(vis, label, (px0, text_y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness, cv2.LINE_AA)
 
     return vis
