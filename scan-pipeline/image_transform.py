@@ -14,7 +14,8 @@ def warp_to_source(scan, source, target, scale: float = WARP_SCALE):
     matrix, _ = homography(source, target, scan.shape[:2], out_shape=(h_out, w_out))
     return cv2.warpPerspective(
         scan, matrix, (w_out, h_out),
-        flags=cv2.INTER_LINEAR,
+        # switched from INTER_LINEAR to INTER_CUBIC: sharper results when upscaling
+        flags=cv2.INTER_CUBIC,
         borderMode=cv2.BORDER_CONSTANT,
         borderValue=(255, 255, 255),
     )
