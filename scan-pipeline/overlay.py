@@ -13,7 +13,7 @@ def display_label(value: str) -> str:
     return value
 
 
-def overlay(page, image):
+def overlay(page, image, checkboxResults):
     h, w = page["dimensions"]
     vis = image.copy()
 
@@ -33,6 +33,7 @@ def overlay(page, image):
 
         color = FIELD_IMAGE_COLOR if value.startswith("field_image") else FIELD_COLOR
         label = display_label(value)
+        label += f" ({checkboxResults[value]["label"]})" if value in checkboxResults else ""
 
         MIN_SCALE = 0.25
         MAX_SCALE = 0.45

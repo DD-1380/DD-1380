@@ -10,6 +10,7 @@ from doctr.models import ocr_predictor
 
 from image_transform import warp_to_source
 from overlay import overlay
+from checkbox_crop import classify_checkbox, is_checkbox_field
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -20,13 +21,27 @@ model = None
 def get_model():
     global model
     if model is None:
-        model = ocr_predictor(pretrained=True).cuda() # remove .cuda() to use CPU. TODO This should be a flag
+        model = ocr_predictor(pretrained=True) # remove .cuda() to use CPU. TODO This should be a flag
     return model
 
 # OCRs the page.
 def ocr_page(model, image_bytes: bytes) -> dict:
     doc = DocumentFile.from_images(image_bytes)
     return model(doc).pages[0].export()
+
+def get_field_locations(source: dict):
+    checkboxArr = []
+    textBoxArr = []
+    
+    for block in source["blocks"]:
+        for line in block["lines"]:
+            for word in line["words"]:
+                if is_checkbox_field(word["value"]):
+                    checkboxArr.append(word)
+                else:
+                    textBoxArr.append(word)
+                    
+    return checkboxArr, textBoxArr
 
 # processes the document.
 async def process_document(
@@ -40,4 +55,7 @@ async def process_document(
     target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
 
     flat = warp_to_source(scan_img, source, target)
-    return flat, overlay(source, flat)
+    textBoxes, checkboxWords = get_field_locations(source)
+    checkboxResults = classify_checkbox(source, flat, checkboxWords)
+    
+    return flat, overlay(source, flat, checkboxResults)
