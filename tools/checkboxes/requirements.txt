@@ -1,0 +1,2 @@
+-r ../../scan-pipeline/requirements.txt
+pillow-heif
