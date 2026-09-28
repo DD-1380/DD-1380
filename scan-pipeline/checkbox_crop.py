@@ -1,6 +1,18 @@
+from pathlib import Path
+
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+
+_checkbox_model = None
+_MODEL_PATH = Path(__file__).resolve().parent.parent / "models" / "checkbox_CNN.keras"
+_CLASS_NAMES = ["checked", "unchecked"]
+
+def get_checkbox_model():
+    global _checkbox_model
+    if _checkbox_model is None:
+        _checkbox_model = tf.keras.models.load_model(_MODEL_PATH)
+    return _checkbox_model
 
 def is_checkbox_field(word: str | None) -> bool:
     if not word:
@@ -23,27 +35,33 @@ def crop_checkbox(word: dict, image, padding = 4):
 
     return image[topDim:bottomDim, leftDim:rightDim].copy()
 
-def predict_checkbox(cropped_image, classNames = ["checked", "unchecked"]):
-    model = tf.keras.models.load_model("../models/checkbox_CNN.keras")
-    
+def _crop_to_input(cropped_image):
     img = Image.fromarray(cropped_image).convert("L").resize((64, 64))
-    imgArr = np.array(img).reshape(1, 64, 64, 1)
-    prediction = model.predict(imgArr, verbose=0)[0][0]
-    predictionLabel = classNames[1] if prediction > 0.5 else classNames[0]
-    
-    return predictionLabel, float(prediction)    
+    return np.array(img).reshape(64, 64, 1)
 
-def classify_checkbox(source: dict, image, checkboxWords = []):
+def predict_checkbox(cropped_image, classNames = None):
+    if classNames is None:
+        classNames = _CLASS_NAMES
+    imgArr = _crop_to_input(cropped_image).reshape(1, 64, 64, 1)
+    prediction = float(get_checkbox_model().predict(imgArr, verbose=0)[0][0])
+    predictionLabel = classNames[1] if prediction > 0.5 else classNames[0]
+    return predictionLabel, prediction
+
+def classify_checkbox(source: dict, image, checkboxWords = None):
+    if not checkboxWords:
+        return {}
+
+    batch = np.stack([
+        _crop_to_input(crop_checkbox(checkbox, image))
+        for checkbox in checkboxWords
+    ])
+    predictions = get_checkbox_model().predict(batch, verbose=0)
+
     checkboxResults = {}
-    
-    for checkbox in checkboxWords:
-        crop = crop_checkbox(checkbox, image)
-        
-        label, confidence = predict_checkbox(crop)
-        
+    for checkbox, prediction in zip(checkboxWords, predictions):
+        score = float(prediction[0])
         checkboxResults[checkbox["value"]] = {
-            "label": label,
-            "confidence": confidence,
+            "label": _CLASS_NAMES[1] if score > 0.5 else _CLASS_NAMES[0],
+            "confidence": score,
         }
-        
     return checkboxResults

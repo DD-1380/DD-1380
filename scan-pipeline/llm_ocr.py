@@ -22,7 +22,7 @@ def prompt_for(context: str | None = None) -> str:
     return (
         f"{PROMPT} This crop is form field '{context}'. Use the field name "
         "only as a hint for expected format; never invent or complete text "
-        "that is not visible in the image."
+        "that is not visible in the image. Text should be in english or numeric with no unicode characters."
     )
 
 
