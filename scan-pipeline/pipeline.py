@@ -48,7 +48,7 @@ def get_field_locations(source: dict):
 async def process_document(
     source: dict,
     raw_bytes: bytes,
-) -> tuple[np.ndarray, np.ndarray, dict]:
+) -> tuple[np.ndarray, np.ndarray, dict, dict]:
     scan_bytes = await asyncio.to_thread(scan, raw_bytes)
     scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
 
@@ -59,4 +59,4 @@ async def process_document(
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
     fields = await asyncio.to_thread(extract_fields, flat, source)
-    return flat, overlay(source, flat, checkboxResults), fields
+    return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
