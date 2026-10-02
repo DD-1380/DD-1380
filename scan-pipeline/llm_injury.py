@@ -33,7 +33,7 @@ def _normalize(text: str) -> str:
     token = " ".join(cleaned.lower().split()).strip("`*.,:;")
     if token in {"unmarked", "not marked"}:
         return "unmarked"
-    if token == "marked":
+    if token in {"marked", "x"}:
         return "marked"
     return cleaned
 
@@ -101,5 +101,7 @@ if __name__ == "__main__":
     import cv2
 
     image = cv2.imread(sys.argv[1])
+    if image is None:
+        raise SystemExit(f"Could not read image: {sys.argv[1]}")
     context = sys.argv[2] if len(sys.argv) > 2 else None
     print(classify_injury(image, context))
