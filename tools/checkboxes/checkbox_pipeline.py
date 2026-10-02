@@ -94,7 +94,7 @@ def collect_checkbox_words(page: dict) -> list[dict]:
 
 async def align_scan(source: dict, raw_path: str) -> np.ndarray:
     raw_bytes = raw_image_bytes(raw_path)
-    transformed, _, _, _ = await process_document(source, raw_bytes)
+    transformed, _, _, _, _ = await process_document(source, raw_bytes)
     return transformed
 
 

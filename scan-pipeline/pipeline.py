@@ -12,6 +12,8 @@ from image_transform import warp_to_source
 from overlay import overlay
 from extract_fields import extract_fields
 from checkbox_crop import classify_checkbox, is_checkbox_field
+from injury_crop import crop_injury_fields
+from llm_injury import classify_injuries
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -48,7 +50,7 @@ def get_field_locations(source: dict):
 async def process_document(
     source: dict,
     raw_bytes: bytes,
-) -> tuple[np.ndarray, np.ndarray, dict, dict]:
+) -> tuple[np.ndarray, np.ndarray, dict, dict, dict]:
     scan_bytes = await asyncio.to_thread(scan, raw_bytes)
     scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
 
@@ -58,5 +60,7 @@ async def process_document(
     flat = warp_to_source(scan_img, source, target)
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
-    fields = await asyncio.to_thread(extract_fields, flat, source)
-    return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
+    fields_task = asyncio.to_thread(extract_fields, flat, source)
+    injuries_task = asyncio.to_thread(classify_injuries, crop_injury_fields(flat, source))
+    fields, injuries = await asyncio.gather(fields_task, injuries_task)
+    return flat, overlay(source, flat, checkboxResults, injuries), fields, checkboxResults, injuries

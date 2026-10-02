@@ -13,22 +13,23 @@ def bgr_to_rgb(image: np.ndarray) -> np.ndarray:
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 # processes the document asynchronously with process_document()
-async def process_async(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str]:
+async def process_async(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str, str]:
     source = json.loads(Path(source_file).read_text())
     raw_bytes = cv2.imencode(
         ".jpg", cv2.cvtColor(raw, cv2.COLOR_RGB2BGR),
     )[1].tobytes()
-    transformed, overlayed, fields, checkboxes = await process_document(source, raw_bytes)
+    transformed, overlayed, fields, checkboxes, injuries = await process_document(source, raw_bytes)
     return (
         raw,
         bgr_to_rgb(transformed),
         bgr_to_rgb(overlayed),
         json.dumps(fields, indent=2),
         json.dumps(checkboxes, indent=2),
+        json.dumps(injuries, indent=2),
     )
 
 # processes the document synchronously with process_async()
-def process(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str]:
+def process(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str, str]:
     if not source_file or raw is None:
         raise gr.Error("Upload a source JSON and a raw photo.")
     return asyncio.run(process_async(source_file, raw))
@@ -51,10 +52,11 @@ with gr.Blocks(title="Scan Pipeline") as demo:
     with gr.Row():
         fields_out = gr.Code(label="Extracted Fields", language="json")
         checkboxes_out = gr.Code(label="Checkboxes", language="json")
+        injuries_out = gr.Code(label="Injuries", language="json")
     process_btn.click(
         process,
         [source, raw],
-        [raw_out, transformed_out, overlayed_out, fields_out, checkboxes_out],
+        [raw_out, transformed_out, overlayed_out, fields_out, checkboxes_out, injuries_out],
     )
 
 if __name__ == "__main__":
