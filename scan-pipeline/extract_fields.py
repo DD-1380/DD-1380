@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import cv2
 import numpy as np
 
+from injury_crop import is_injury_field
 from ocr_backends import ocr, workers
 
 # Extract bounding boxes for all text fields from source.json.
@@ -13,7 +14,11 @@ def get_field_boxes(source: dict) -> dict:
         for line in block["lines"]:
             for word in line["words"]:
                 value = word["value"]
-                if value.startswith("field_") and not value.startswith("field_image_"):
+                if (
+                    value.startswith("field_")
+                    and not value.startswith("field_image_")
+                    and not is_injury_field(value)
+                ):
                     boxes[value] = word["geometry"]
     return boxes
 
