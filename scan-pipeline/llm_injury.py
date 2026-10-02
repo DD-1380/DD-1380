@@ -7,10 +7,10 @@ from llm_ocr import crop_to_data_url, get_client, get_model
 
 PROMPT = (
     "You are inspecting one body-region crop from a scanned DD Form 1380. "
-    "The crop contains a printed body outline. A handwritten mark, usually an X, "
-    "means that body region is injured. Return ONLY the word marked if a "
-    "handwritten injury mark is visible, or unmarked if the crop shows only "
-    "the printed outline. No extra words, quotes, markdown, or commentary."
+    "The crop shows a printed body outline. That printed outline is not an injury. "
+    "A handwritten mark added on the region, usually an X, means it is injured. "
+    "Return ONLY the word marked if a handwritten injury mark is visible, or unmarked "
+    "if the crop shows only the printed outline. No extra words, quotes, markdown, or commentary."
 )
 
 
@@ -19,8 +19,8 @@ def prompt_for(context: str | None = None) -> str:
         return PROMPT
     return (
         f"{PROMPT} This crop is form field '{context}'. Use the field name "
-        "only as a hint for which body region this is; judge the mark from "
-        "the image and never invent a mark that is not visible."
+        "only to identify the body region. Never mark a region because of "
+        "the field name, and never invent a mark that is not visible."
     )
 
 
@@ -29,19 +29,16 @@ def workers() -> int:
 
 
 def _normalize(text: str) -> str:
-    cleaned = text.strip().strip('"').strip("'").lower()
-    first = cleaned.split(maxsplit=1)[0].strip(".,:;") if cleaned else ""
-    if first in {"marked", "yes", "x", "true", "injured"}:
-        return "marked"
-    if first in {"unmarked", "no", "false", "none", "blank", "clear", ""}:
+    cleaned = text.strip().strip('"').strip("'")
+    token = " ".join(cleaned.lower().split()).strip("`*.,:;")
+    if token in {"unmarked", "not marked"}:
         return "unmarked"
+    if token == "marked":
+        return "marked"
     return cleaned
 
 
-def classify_injury(image_crop: np.ndarray, context: str | None = None) -> str:
-    if image_crop.size == 0:
-        return "unmarked"
-
+def _classify_data_url(data_url: str, context: str | None = None) -> str:
     response = get_client().chat.completions.create(
         model=get_model(),
         temperature=0,
@@ -53,7 +50,7 @@ def classify_injury(image_crop: np.ndarray, context: str | None = None) -> str:
                     {"type": "text", "text": prompt_for(context)},
                     {
                         "type": "image_url",
-                        "image_url": {"url": crop_to_data_url(image_crop)},
+                        "image_url": {"url": data_url},
                     },
                 ],
             }
@@ -62,19 +59,37 @@ def classify_injury(image_crop: np.ndarray, context: str | None = None) -> str:
             "reasoning_effort": os.environ.get("OCR_LLM_REASONING_EFFORT", "none"),
         },
     )
-    text = response.choices[0].message.content or ""
+    text = (response.choices[0].message.content or "").strip()
     return _normalize(text)
 
 
+def _label_encoded(job: tuple[str, str | None]) -> str:
+    context, data_url = job
+    if data_url is None:
+        return "unmarked"
+    return _classify_data_url(data_url, context)
+
+
+def classify_injury(image_crop: np.ndarray, context: str | None = None) -> str:
+    if image_crop.size == 0:
+        return "unmarked"
+    return _classify_data_url(crop_to_data_url(image_crop), context)
+
+
 def classify_injuries(crops: dict[str, np.ndarray]) -> dict[str, str]:
-    field_keys = list(crops.keys())
-    images = [crops[field_key] for field_key in field_keys]
+    get_client()
+    jobs = []
+    for field_key, image in crops.items():
+        if image.size == 0:
+            jobs.append((field_key, None))
+        else:
+            jobs.append((field_key, crop_to_data_url(image)))
 
     with ThreadPoolExecutor(max_workers=workers()) as pool:
-        labels = pool.map(classify_injury, images, field_keys)
+        labels = pool.map(_label_encoded, jobs)
 
     output = {}
-    for field_key, label in zip(field_keys, labels):
+    for (field_key, _), label in zip(jobs, labels):
         output[field_key] = label
         print(f"{field_key}: '{label}'")
     return output

@@ -60,7 +60,8 @@ async def process_document(
     flat = warp_to_source(scan_img, source, target)
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
-    fields_task = asyncio.to_thread(extract_fields, flat, source)
-    injuries_task = asyncio.to_thread(classify_injuries, crop_injury_fields(flat, source))
-    fields, injuries = await asyncio.gather(fields_task, injuries_task)
+    # Field OCR and injury classification both encode crops and call into
+    # native libraries. Run one after the other so those calls do not overlap.
+    fields = await asyncio.to_thread(extract_fields, flat, source)
+    injuries = await asyncio.to_thread(classify_injuries, crop_injury_fields(flat, source))
     return flat, overlay(source, flat, checkboxResults, injuries), fields, checkboxResults, injuries
