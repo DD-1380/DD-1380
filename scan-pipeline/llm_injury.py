@@ -8,7 +8,7 @@ from llm_ocr import crop_to_data_url, get_client, get_model
 PROMPT = (
     "You are inspecting one body-region crop from a scanned DD Form 1380. "
     "The crop shows a printed body outline. That printed outline is not an injury. "
-    "A handwritten mark added on the region, usually an X, means it is injured. "
+    "A handwritten mark added on the region, usually an X or a line crossing through it, means it is injured. "
     "Return ONLY the word marked if a handwritten injury mark is visible, or unmarked "
     "if the crop shows only the printed outline. No extra words, quotes, markdown, or commentary."
 )
