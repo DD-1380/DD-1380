@@ -39,6 +39,15 @@ def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
 
     output = {}
     for field_key, text in zip(field_keys, texts):
+
+        # The BloodPressue boxes have a printed "/", so a reading of just "/" means the box is blank.
+        if field_key.startswith("field_blood_") and text.replace("/", "").strip() == "":
+            text = ""
+            
+        # Symbol-only readings like "▼" mean the box is blank. "/" and "-" are kept as line-throughs.
+        if text and not any(c.isalnum() or c in "/-" for c in text):
+            text = ""
+        
         output[field_key] = text
         print(f"{field_key}: '{text}'")
     return output
