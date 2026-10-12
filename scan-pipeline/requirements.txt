@@ -1,4 +1,4 @@
-docscan==1.0.6
+imutils
 rembg[gpu]
 python-doctr[torch]==1.0.1
 onnxruntime-gpu>=1.23.2
