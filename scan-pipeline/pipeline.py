@@ -4,7 +4,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from docscan.doc import scan
+from scan_card import scan
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
 
