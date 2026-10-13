@@ -31,16 +31,21 @@ def ocr_llm(image_crop: np.ndarray, context: str | None = None) -> str:
     import llm_ocr
     return llm_ocr.ocr(image_crop, context)
 
+def ocr_trocr(image_crop: np.ndarray, context: str | None = None) -> str:
+    import trocr_backend
+    return trocr_backend.ocr(image_crop, context or "")
+
 BACKENDS = {
     "doctr": ocr_doctr,
     "llm": ocr_llm,
+    "trocr": ocr_trocr,
 }
 
 def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
     if image_crop.size == 0:
         return ""
     backend = os.environ.get("OCR_BACKEND", "doctr")
-    if backend == "llm":
+    if backend in ("llm", "trocr"):
         return BACKENDS[backend](image_crop, context)
     return BACKENDS[backend](image_crop)
 

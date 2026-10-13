@@ -6,3 +6,4 @@ opencv-python>=4.5.0,<5
 gradio>=6.19.0
 openai>=2.45.0
 tensorflow>=2.21.0
+transformers>=5.19.0
