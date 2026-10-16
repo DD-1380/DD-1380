@@ -2,7 +2,7 @@ import asyncio
 import time
 import uuid
 from typing import Dict, Any, Optional
-from fastapi import FastAPI, File, UploadFile, HTTPException, status, BackgroundTasks
+from fastapi import FastAPI, Request, HTTPException, status, BackgroundTasks
 from pydantic import BaseModel
 import numpy as np
 import cv2
@@ -55,22 +55,25 @@ async def run_ocr_background(job_id: str, raw_bytes: bytes):
         }
 
 @app.post("/jobs/{job_uuid}", status_code=status.HTTP_202_ACCEPTED)
-async def create_job(job_uuid: str, file: UploadFile = File(...), background_tasks: BackgroundTasks = BackgroundTasks()):
+async def create_job(job_uuid: str, request: Request, background_tasks: BackgroundTasks = BackgroundTasks()):
     """
     1. BATDOK uploads images with a job UUID they generate.
     2. We reply with 202 Accepted right away.
     """
-    # Read the uploaded image bytes
-    raw_bytes = await file.read()
+    # Read the raw image bytes directly from the request body
+    raw_bytes = await request.body()
+    
+    if not raw_bytes:
+        raise HTTPException(status_code=400, detail="No image data received.")
     
     # Initialize job status as working
-    job_store[job_id] = {
+    job_store[job_uuid] = {
         "status": "working",
         "result": None,
         "error": None
     }
     
-    # Kick off processing in the background so we can instantly return 202
+    # Kick off processing in the background
     background_tasks.add_task(run_ocr_background, job_uuid, raw_bytes)
     
     return {"status": "accepted", "job_uuid": job_uuid}
