@@ -1,60 +1,62 @@
 import asyncio
 import json
-from pathlib import Path
 
 import cv2
 import gradio as gr
 import numpy as np
 
-from pipeline import process_document
+from pipeline import process_card
 
 # converts BGR to RGB.
 def bgr_to_rgb(image: np.ndarray) -> np.ndarray:
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# processes the document asynchronously with process_document()
-async def process_async(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str]:
-    source = json.loads(Path(source_file).read_text())
-    raw_bytes = cv2.imencode(
-        ".jpg", cv2.cvtColor(raw, cv2.COLOR_RGB2BGR),
-    )[1].tobytes()
-    transformed, overlayed, fields, checkboxes = await process_document(source, raw_bytes)
+def to_bytes(image: np.ndarray | None) -> bytes | None:
+    if image is None:
+        return None
+    return cv2.imencode(".jpg", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))[1].tobytes()
+
+# processes the card asynchronously with process_card()
+async def process_async(front: np.ndarray | None, back: np.ndarray | None):
+    card = await process_card(to_bytes(front), to_bytes(back))
+    images = []
+    for side in ("front", "back"):
+        result = card["sides"].get(side)
+        images += [bgr_to_rgb(result["aligned"]), bgr_to_rgb(result["overlay"])] if result else [None, None]
     return (
-        raw,
-        bgr_to_rgb(transformed),
-        bgr_to_rgb(overlayed),
-        json.dumps(fields, indent=2),
-        json.dumps(checkboxes, indent=2),
+        *images,
+        json.dumps(card["fields"], indent=2),
+        json.dumps(card["checkboxes"], indent=2),
+        json.dumps(card["score"], indent=2),
     )
 
-# processes the document synchronously with process_async()
-def process(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, str, str]:
-    if not source_file or raw is None:
-        raise gr.Error("Upload a source JSON and a raw photo.")
-    return asyncio.run(process_async(source_file, raw))
+# processes the card synchronously with process_async()
+def process(front: np.ndarray | None, back: np.ndarray | None):
+    if front is None and back is None:
+        raise gr.Error("Upload a photo of the front, the back, or both.")
+    return asyncio.run(process_async(front, back))
 
 # creates the gradio interface.
 with gr.Blocks(title="Scan Pipeline") as demo:
-    gr.Markdown("Upload a source OCR JSON and a raw photo to scan, align, and overlay.")
+    gr.Markdown("Upload the front and back of a card to scan, align, read and score it. Either side can be left out.")
     with gr.Row():
-        source = gr.File(label="Source OCR JSON", file_types=[".json"])
-        raw = gr.Image(
-            label="Raw photo",
-            type="numpy",
-            sources=["upload", "webcam"],
-        )
+        front = gr.Image(label="Front photo", type="numpy", sources=["upload", "webcam"])
+        back = gr.Image(label="Back photo", type="numpy", sources=["upload", "webcam"])
     process_btn = gr.Button("Process", variant="primary")
     with gr.Row():
-        raw_out = gr.Image(label="Raw")
-        transformed_out = gr.Image(label="Transformed")
-        overlayed_out = gr.Image(label="Overlayed")
+        front_out = gr.Image(label="Front transformed")
+        front_overlay = gr.Image(label="Front overlayed")
+    with gr.Row():
+        back_out = gr.Image(label="Back transformed")
+        back_overlay = gr.Image(label="Back overlayed")
     with gr.Row():
         fields_out = gr.Code(label="Extracted Fields", language="json")
         checkboxes_out = gr.Code(label="Checkboxes", language="json")
+        score_out = gr.Code(label="Score", language="json")
     process_btn.click(
         process,
-        [source, raw],
-        [raw_out, transformed_out, overlayed_out, fields_out, checkboxes_out],
+        [front, back],
+        [front_out, front_overlay, back_out, back_overlay, fields_out, checkboxes_out, score_out],
     )
 
 if __name__ == "__main__":

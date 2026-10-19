@@ -1,5 +1,7 @@
 import asyncio
+import json
 import os
+import re
 from pathlib import Path
 
 import cv2
@@ -13,6 +15,7 @@ from overlay import overlay
 from extract_fields import extract_fields
 from checkbox_crop import classify_checkbox, is_checkbox_field
 from converter import convert_to_badok
+from scoring import score_card
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -23,7 +26,10 @@ model = None
 def get_model():
     global model
     if model is None:
-        model = ocr_predictor(pretrained=True) # .cuda() remove .cuda() to use CPU. TODO This should be a flag
+        import torch
+        model = ocr_predictor(pretrained=True)
+        if torch.cuda.is_available():
+            model = model.cuda()
     return model
 
 # OCRs the page.
@@ -62,3 +68,42 @@ async def process_document(
     fields = await asyncio.to_thread(extract_fields, flat, source)
     badok = convert_to_badok(fields)
     return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
+
+SOURCES = {"front": HERE / "front_source.json", "back": HERE / "back_source.json"}
+_sources = {}
+
+
+def get_source(side: str) -> dict:
+    if side not in _sources:
+        _sources[side] = json.loads(SOURCES[side].read_text())
+    return _sources[side]
+
+
+# "front" or "back" from a photo name like "#38_Back_Case1.HEIC", None if it doesn't say.
+def side_of(name: str) -> str | None:
+    match = re.search(r"(?<![a-z])(front|back)(?![a-z])", Path(name).stem, re.IGNORECASE)
+    return match.group(1).lower() if match else None
+
+
+# Groups photos into cards by name: #38_Front_Case1 and #38_Back_Case1 -> "#38_Case1".
+def pair_photos(paths) -> dict:
+    cards = {}
+    for path in map(Path, paths):
+        side = side_of(path.name)
+        if side:
+            key = re.sub(r"[_\- ]?(front|back)(?![a-z])", "", path.stem, flags=re.IGNORECASE)
+            cards.setdefault(key, {})[side] = path
+    return cards
+
+
+# Runs each side present through process_document and scores the card. A missing side's items are not_scored.
+async def process_card(front_bytes: bytes | None = None, back_bytes: bytes | None = None) -> dict:
+    sides, fields, checkboxes = {}, {}, {}
+    for side, raw in (("front", front_bytes), ("back", back_bytes)):
+        if raw is None:
+            continue
+        flat, overlaid, side_fields, side_boxes = await process_document(get_source(side), raw)
+        sides[side] = {"aligned": flat, "overlay": overlaid, "fields": side_fields, "checkboxes": side_boxes}
+        fields.update(side_fields)
+        checkboxes.update(side_boxes)
+    return {"sides": sides, "fields": fields, "checkboxes": checkboxes, "score": score_card(fields, checkboxes)}

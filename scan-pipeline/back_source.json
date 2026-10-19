@@ -1,0 +1,3809 @@
+{
+  "page_idx": 0,
+  "dimensions": [
+    3718,
+    2483
+  ],
+  "orientation": {
+    "value": null,
+    "confidence": null
+  },
+  "language": {
+    "value": null,
+    "confidence": null
+  },
+  "blocks": [
+    {
+      "geometry": [
+        [
+          0.021832051701570654,
+          0.041015625
+        ],
+        [
+          0.9679319371727748,
+          0.962890625
+        ]
+      ],
+      "objectness_score": 0.7509647400355807,
+      "lines": [
+        {
+          "geometry": [
+            [
+              0.17098535667539266,
+              0.0478515625
+            ],
+            [
+              0.44297079515706805,
+              0.0703125
+            ]
+          ],
+          "objectness_score": 0.6650539040565491,
+          "words": [
+            {
+              "value": "BATTLE",
+              "confidence": 0.9982616305351257,
+              "geometry": [
+                [
+                  0.17098535667539266,
+                  0.048828125
+                ],
+                [
+                  0.28796834096858637,
+                  0.0703125
+                ]
+              ],
+              "objectness_score": 0.6480527520179749,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "ROSTER",
+              "confidence": 0.9983566403388977,
+              "geometry": [
+                [
+                  0.29235520287958117,
+                  0.048828125
+                ],
+                [
+                  0.4137250490837696,
+                  0.0673828125
+                ]
+              ],
+              "objectness_score": 0.7047873139381409,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "#:",
+              "confidence": 0.998547375202179,
+              "geometry": [
+                [
+                  0.41518733638743455,
+                  0.0478515625
+                ],
+                [
+                  0.44297079515706805,
+                  0.0654296875
+                ]
+              ],
+              "objectness_score": 0.6423216462135315,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.5146228730366492,
+              0.041015625
+            ],
+            [
+              0.6418418684554974,
+              0.0673828125
+            ]
+          ],
+          "objectness_score": 0.620313286781311,
+          "words": [
+            {
+              "value": "TO232",
+              "confidence": 0.5404589176177979,
+              "geometry": [
+                [
+                  0.5146228730366492,
+                  0.041015625
+                ],
+                [
+                  0.6418418684554974,
+                  0.0673828125
+                ]
+              ],
+              "objectness_score": 0.620313286781311,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.22655227421465968,
+              0.076171875
+            ],
+            [
+              0.612596122382199,
+              0.0986328125
+            ]
+          ],
+          "objectness_score": 0.6267835721373558,
+          "words": [
+            {
+              "value": "EVAC:",
+              "confidence": 0.980893611907959,
+              "geometry": [
+                [
+                  0.22655227421465968,
+                  0.078125
+                ],
+                [
+                  0.3172140870418848,
+                  0.0966796875
+                ]
+              ],
+              "objectness_score": 0.7331928014755249,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "KUrgent",
+              "confidence": 0.48956185579299927,
+              "geometry": [
+                [
+                  0.331836960078534,
+                  0.0771484375
+                ],
+                [
+                  0.4590559554973822,
+                  0.0986328125
+                ]
+              ],
+              "objectness_score": 0.8075858950614929,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.19855785369873047,
+              "geometry": [
+                [
+                  0.47660340314136124,
+                  0.0888671875
+                ],
+                [
+                  0.4853771269633508,
+                  0.0947265625
+                ]
+              ],
+              "objectness_score": 0.16376295685768127,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Priority",
+              "confidence": 0.9980121850967407,
+              "geometry": [
+                [
+                  0.5102360111256544,
+                  0.076171875
+                ],
+                [
+                  0.612596122382199,
+                  0.09765625
+                ]
+              ],
+              "objectness_score": 0.8025926351547241,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.6579270287958116,
+              0.076171875
+            ],
+            [
+              0.7661362892670157,
+              0.09375
+            ]
+          ],
+          "objectness_score": 0.8573892116546631,
+          "words": [
+            {
+              "value": "Routine",
+              "confidence": 0.9887502789497375,
+              "geometry": [
+                [
+                  0.6579270287958116,
+                  0.076171875
+                ],
+                [
+                  0.7661362892670157,
+                  0.09375
+                ]
+              ],
+              "objectness_score": 0.8573892116546631,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.021832051701570654,
+              0.1083984375
+            ],
+            [
+              0.574576652486911,
+              0.1318359375
+            ]
+          ],
+          "objectness_score": 0.7837524473667145,
+          "words": [
+            {
+              "value": "Treatments:",
+              "confidence": 0.9924739003181458,
+              "geometry": [
+                [
+                  0.021832051701570654,
+                  0.109375
+                ],
+                [
+                  0.19584424083769636,
+                  0.1318359375
+                ]
+              ],
+              "objectness_score": 0.714117169380188,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "(X",
+              "confidence": 0.9880978465080261,
+              "geometry": [
+                [
+                  0.2002311027486911,
+                  0.1123046875
+                ],
+                [
+                  0.2280145615183246,
+                  0.130859375
+                ]
+              ],
+              "objectness_score": 0.783186137676239,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "all",
+              "confidence": 0.9605970978736877,
+              "geometry": [
+                [
+                  0.2280145615183246,
+                  0.111328125
+                ],
+                [
+                  0.25726030759162305,
+                  0.1279296875
+                ]
+              ],
+              "objectness_score": 0.7886804938316345,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "that",
+              "confidence": 0.9998798370361328,
+              "geometry": [
+                [
+                  0.2587225948952879,
+                  0.111328125
+                ],
+                [
+                  0.3040535013089005,
+                  0.126953125
+                ]
+              ],
+              "objectness_score": 0.8302080035209656,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "apply,",
+              "confidence": 0.98349529504776,
+              "geometry": [
+                [
+                  0.30112892670157065,
+                  0.1103515625
+                ],
+                [
+                  0.3683941426701571,
+                  0.12890625
+                ]
+              ],
+              "objectness_score": 0.8179548382759094,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "and",
+              "confidence": 0.8807121515274048,
+              "geometry": [
+                [
+                  0.3713187172774869,
+                  0.109375
+                ],
+                [
+                  0.41518733638743455,
+                  0.1259765625
+                ]
+              ],
+              "objectness_score": 0.7263661026954651,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "fill",
+              "confidence": 0.9706732630729675,
+              "geometry": [
+                [
+                  0.41518733638743455,
+                  0.109375
+                ],
+                [
+                  0.444433082460733,
+                  0.1259765625
+                ]
+              ],
+              "objectness_score": 0.7962957620620728,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "in",
+              "confidence": 0.9993732571601868,
+              "geometry": [
+                [
+                  0.444433082460733,
+                  0.1083984375
+                ],
+                [
+                  0.4692919666230366,
+                  0.1259765625
+                ]
+              ],
+              "objectness_score": 0.7841289639472961,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "the",
+              "confidence": 0.998348593711853,
+              "geometry": [
+                [
+                  0.4692919666230366,
+                  0.109375
+                ],
+                [
+                  0.5073114365183246,
+                  0.125
+                ]
+              ],
+              "objectness_score": 0.8357502818107605,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "blank)",
+              "confidence": 0.9989053010940552,
+              "geometry": [
+                [
+                  0.5102360111256544,
+                  0.1083984375
+                ],
+                [
+                  0.574576652486911,
+                  0.1279296875
+                ]
+              ],
+              "objectness_score": 0.7608367204666138,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8026934718586387,
+              0.1044921875
+            ],
+            [
+              0.8699586878272252,
+              0.1259765625
+            ]
+          ],
+          "objectness_score": 0.8152652382850647,
+          "words": [
+            {
+              "value": "Type",
+              "confidence": 0.5823860168457031,
+              "geometry": [
+                [
+                  0.8026934718586387,
+                  0.1044921875
+                ],
+                [
+                  0.8699586878272252,
+                  0.1259765625
+                ]
+              ],
+              "objectness_score": 0.8152652382850647,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.036454924738219874,
+              0.1318359375
+            ],
+            [
+              0.630143570026178,
+              0.1591796875
+            ]
+          ],
+          "objectness_score": 0.660146449293409,
+          "words": [
+            {
+              "value": "C:TQ-",
+              "confidence": 0.9985598921775818,
+              "geometry": [
+                [
+                  0.036454924738219874,
+                  0.1357421875
+                ],
+                [
+                  0.13004131217277487,
+                  0.1591796875
+                ]
+              ],
+              "objectness_score": 0.6841711401939392,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "EA",
+              "confidence": 0.3422466218471527,
+              "geometry": [
+                [
+                  0.1344281740837696,
+                  0.13671875
+                ],
+                [
+                  0.16659849476439792,
+                  0.15625
+                ]
+              ],
+              "objectness_score": 0.7200449705123901,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Extremity",
+              "confidence": 0.9933690428733826,
+              "geometry": [
+                [
+                  0.16074934554973824,
+                  0.1337890625
+                ],
+                [
+                  0.29527977748691103,
+                  0.15625
+                ]
+              ],
+              "objectness_score": 0.7173338532447815,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.32442423701286316,
+              "geometry": [
+                [
+                  0.3069780759162304,
+                  0.1357421875
+                ],
+                [
+                  0.3245255235602094,
+                  0.1513671875
+                ]
+              ],
+              "objectness_score": 0.5808149576187134,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Junctional",
+              "confidence": 0.9364427328109741,
+              "geometry": [
+                [
+                  0.3362238219895288,
+                  0.1328125
+                ],
+                [
+                  0.4795279777486911,
+                  0.1513671875
+                ]
+              ],
+              "objectness_score": 0.7400806546211243,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.7974279522895813,
+              "geometry": [
+                [
+                  0.49561313808900526,
+                  0.1357421875
+                ],
+                [
+                  0.5102360111256544,
+                  0.150390625
+                ]
+              ],
+              "objectness_score": 0.44904959201812744,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Truncal",
+              "confidence": 0.9978739023208618,
+              "geometry": [
+                [
+                  0.5248588841623036,
+                  0.1318359375
+                ],
+                [
+                  0.630143570026178,
+                  0.150390625
+                ]
+              ],
+              "objectness_score": 0.7295299768447876,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.7105693717277487,
+              0.1279296875
+            ],
+            [
+              0.9035912958115183,
+              0.1513671875
+            ]
+          ],
+          "objectness_score": 0.7917261918385824,
+          "words": [
+            {
+              "value": "CAT",
+              "confidence": 0.980705738067627,
+              "geometry": [
+                [
+                  0.7105693717277487,
+                  0.1279296875
+                ],
+                [
+                  0.779296875,
+                  0.1513671875
+                ]
+              ],
+              "objectness_score": 0.7594782710075378,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "R",
+              "confidence": 0.9735394716262817,
+              "geometry": [
+                [
+                  0.8012311845549738,
+                  0.1279296875
+                ],
+                [
+                  0.8275523560209423,
+                  0.1474609375
+                ]
+              ],
+              "objectness_score": 0.792020320892334,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Thigh",
+              "confidence": 0.811417818069458,
+              "geometry": [
+                [
+                  0.836326079842932,
+                  0.1279296875
+                ],
+                [
+                  0.9035912958115183,
+                  0.1513671875
+                ]
+              ],
+              "objectness_score": 0.8236799836158752,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.07593668193717279,
+              0.1640625
+            ],
+            [
+              0.5584914921465969,
+              0.1884765625
+            ]
+          ],
+          "objectness_score": 0.702672004699707,
+          "words": [
+            {
+              "value": "Dressing-E",
+              "confidence": 0.6693139672279358,
+              "geometry": [
+                [
+                  0.07593668193717279,
+                  0.1669921875
+                ],
+                [
+                  0.23971285994764396,
+                  0.1884765625
+                ]
+              ],
+              "objectness_score": 0.7265180945396423,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Hemostatic",
+              "confidence": 0.9968332648277283,
+              "geometry": [
+                [
+                  0.23971285994764396,
+                  0.1640625
+                ],
+                [
+                  0.3976398887434555,
+                  0.1845703125
+                ]
+              ],
+              "objectness_score": 0.710176944732666,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "I",
+              "confidence": 0.402951180934906,
+              "geometry": [
+                [
+                  0.4049513252617801,
+                  0.16796875
+                ],
+                [
+                  0.41518733638743455,
+                  0.17578125
+                ]
+              ],
+              "objectness_score": 0.5753991007804871,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Pressure",
+              "confidence": 0.9978898167610168,
+              "geometry": [
+                [
+                  0.4312724967277487,
+                  0.1640625
+                ],
+                [
+                  0.5584914921465969,
+                  0.181640625
+                ]
+              ],
+              "objectness_score": 0.7985938787460327,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.5950486747382199,
+              0.1630859375
+            ],
+            [
+              0.6769367637434555,
+              0.181640625
+            ]
+          ],
+          "objectness_score": 0.8609347343444824,
+          "words": [
+            {
+              "value": "Other",
+              "confidence": 0.9998314380645752,
+              "geometry": [
+                [
+                  0.5950486747382199,
+                  0.1630859375
+                ],
+                [
+                  0.6769367637434555,
+                  0.181640625
+                ]
+              ],
+              "objectness_score": 0.8609347343444824,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03937949934554974,
+              0.197265625
+            ],
+            [
+              0.5511800556282722,
+              0.22265625
+            ]
+          ],
+          "objectness_score": 0.7170970241228739,
+          "words": [
+            {
+              "value": "A:*Intact",
+              "confidence": 0.45102229714393616,
+              "geometry": [
+                [
+                  0.03937949934554974,
+                  0.197265625
+                ],
+                [
+                  0.18707051701570682,
+                  0.22265625
+                ]
+              ],
+              "objectness_score": 0.7685703635215759,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "D",
+              "confidence": 0.9862686991691589,
+              "geometry": [
+                [
+                  0.1929196662303665,
+                  0.201171875
+                ],
+                [
+                  0.21192940117801046,
+                  0.216796875
+                ]
+              ],
+              "objectness_score": 0.6354811191558838,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "NPA",
+              "confidence": 0.8033823370933533,
+              "geometry": [
+                [
+                  0.22216541230366493,
+                  0.19921875
+                ],
+                [
+                  0.28504376636125656,
+                  0.2177734375
+                ]
+              ],
+              "objectness_score": 0.8722255825996399,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "CRIC",
+              "confidence": 0.5987516641616821,
+              "geometry": [
+                [
+                  0.29235520287958117,
+                  0.197265625
+                ],
+                [
+                  0.3961776014397906,
+                  0.220703125
+                ]
+              ],
+              "objectness_score": 0.6356600522994995,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "I",
+              "confidence": 0.7930509448051453,
+              "geometry": [
+                [
+                  0.40641361256544506,
+                  0.201171875
+                ],
+                [
+                  0.4166496236910995,
+                  0.2119140625
+                ]
+              ],
+              "objectness_score": 0.5944597125053406,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "ET-Tube",
+              "confidence": 0.9893543720245361,
+              "geometry": [
+                [
+                  0.43419707133507857,
+                  0.1982421875
+                ],
+                [
+                  0.5511800556282722,
+                  0.2158203125
+                ]
+              ],
+              "objectness_score": 0.796185314655304,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.5994355366492147,
+              0.1962890625
+            ],
+            [
+              0.6652384653141361,
+              0.21484375
+            ]
+          ],
+          "objectness_score": 0.8420332074165344,
+          "words": [
+            {
+              "value": "SGA",
+              "confidence": 0.9989535808563232,
+              "geometry": [
+                [
+                  0.5994355366492147,
+                  0.1962890625
+                ],
+                [
+                  0.6652384653141361,
+                  0.21484375
+                ]
+              ],
+              "objectness_score": 0.8420332074165344,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03937949934554974,
+              0.23046875
+            ],
+            [
+              0.7003333606020943,
+              0.255859375
+            ]
+          ],
+          "objectness_score": 0.6721741855144501,
+          "words": [
+            {
+              "value": "B:",
+              "confidence": 0.9672783017158508,
+              "geometry": [
+                [
+                  0.03937949934554974,
+                  0.234375
+                ],
+                [
+                  0.07739896924083772,
+                  0.255859375
+                ]
+              ],
+              "objectness_score": 0.785548746585846,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "DO2",
+              "confidence": 0.6520203351974487,
+              "geometry": [
+                [
+                  0.06862524541884818,
+                  0.2353515625
+                ],
+                [
+                  0.14905104712041883,
+                  0.2548828125
+                ]
+              ],
+              "objectness_score": 0.781530499458313,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.3868504464626312,
+              "geometry": [
+                [
+                  0.1592870582460733,
+                  0.2373046875
+                ],
+                [
+                  0.16952306937172773,
+                  0.2451171875
+                ]
+              ],
+              "objectness_score": 0.5464926362037659,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Needle-D",
+              "confidence": 0.9460224509239197,
+              "geometry": [
+                [
+                  0.18853280431937175,
+                  0.2333984375
+                ],
+                [
+                  0.31282722513089006,
+                  0.251953125
+                ]
+              ],
+              "objectness_score": 0.7535529136657715,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.9635917544364929,
+              "geometry": [
+                [
+                  0.32306323625654454,
+                  0.2333984375
+                ],
+                [
+                  0.34207297120418845,
+                  0.2470703125
+                ]
+              ],
+              "objectness_score": 0.6137500405311584,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Chest-Tube",
+              "confidence": 0.9671209454536438,
+              "geometry": [
+                [
+                  0.35084669502617805,
+                  0.232421875
+                ],
+                [
+                  0.5116982984293194,
+                  0.25
+                ]
+              ],
+              "objectness_score": 0.7653793096542358,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "D",
+              "confidence": 0.8980413675308228,
+              "geometry": [
+                [
+                  0.520472022251309,
+                  0.232421875
+                ],
+                [
+                  0.5380194698952879,
+                  0.248046875
+                ]
+              ],
+              "objectness_score": 0.360115647315979,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Chest-Seal",
+              "confidence": 0.9208669662475586,
+              "geometry": [
+                [
+                  0.5541046302356021,
+                  0.23046875
+                ],
+                [
+                  0.7003333606020943,
+                  0.248046875
+                ]
+              ],
+              "objectness_score": 0.771023690700531,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03937949934554974,
+              0.26953125
+            ],
+            [
+              0.07739896924083772,
+              0.291015625
+            ]
+          ],
+          "objectness_score": 0.8170207142829895,
+          "words": [
+            {
+              "value": "C:",
+              "confidence": 0.9998389482498169,
+              "geometry": [
+                [
+                  0.03937949934554974,
+                  0.26953125
+                ],
+                [
+                  0.07739896924083772,
+                  0.291015625
+                ]
+              ],
+              "objectness_score": 0.8170207142829895,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.3859415903141361,
+              0.265625
+            ],
+            [
+              0.46782967931937175,
+              0.283203125
+            ]
+          ],
+          "objectness_score": 0.8728422522544861,
+          "words": [
+            {
+              "value": "Name",
+              "confidence": 0.8440383076667786,
+              "geometry": [
+                [
+                  0.3859415903141361,
+                  0.265625
+                ],
+                [
+                  0.46782967931937175,
+                  0.283203125
+                ]
+              ],
+              "objectness_score": 0.8728422522544861,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.5848126636125655,
+              0.2646484375
+            ],
+            [
+              0.6886350621727748,
+              0.28125
+            ]
+          ],
+          "objectness_score": 0.8670549988746643,
+          "words": [
+            {
+              "value": "Volume",
+              "confidence": 0.9501729011535645,
+              "geometry": [
+                [
+                  0.5848126636125655,
+                  0.2646484375
+                ],
+                [
+                  0.6886350621727748,
+                  0.28125
+                ]
+              ],
+              "objectness_score": 0.8670549988746643,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.7251922447643979,
+              0.2646484375
+            ],
+            [
+              0.8085426210732984,
+              0.279296875
+            ]
+          ],
+          "objectness_score": 0.856924831867218,
+          "words": [
+            {
+              "value": "Route",
+              "confidence": 0.9973963499069214,
+              "geometry": [
+                [
+                  0.7251922447643979,
+                  0.2646484375
+                ],
+                [
+                  0.8085426210732984,
+                  0.279296875
+                ]
+              ],
+              "objectness_score": 0.856924831867218,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8684964005235603,
+              0.26171875
+            ],
+            [
+              0.9372239037958114,
+              0.279296875
+            ]
+          ],
+          "objectness_score": 0.8543076515197754,
+          "words": [
+            {
+              "value": "Time",
+              "confidence": 0.9998593330383301,
+              "geometry": [
+                [
+                  0.8684964005235603,
+                  0.26171875
+                ],
+                [
+                  0.9372239037958114,
+                  0.279296875
+                ]
+              ],
+              "objectness_score": 0.8543076515197754,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.1519756217277487,
+              0.3095703125
+            ],
+            [
+              0.22508998691099474,
+              0.328125
+            ]
+          ],
+          "objectness_score": 0.767217218875885,
+          "words": [
+            {
+              "value": "Fluid",
+              "confidence": 0.9991533756256104,
+              "geometry": [
+                [
+                  0.1519756217277487,
+                  0.3095703125
+                ],
+                [
+                  0.22508998691099474,
+                  0.328125
+                ]
+              ],
+              "objectness_score": 0.767217218875885,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.1475887598167539,
+              0.3623046875
+            ],
+            [
+              0.23240142342931935,
+              0.3798828125
+            ]
+          ],
+          "objectness_score": 0.810011625289917,
+          "words": [
+            {
+              "value": "Blood",
+              "confidence": 0.9998986721038818,
+              "geometry": [
+                [
+                  0.1475887598167539,
+                  0.3623046875
+                ],
+                [
+                  0.23240142342931935,
+                  0.3798828125
+                ]
+              ],
+              "objectness_score": 0.810011625289917,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.1344281740837696,
+              0.384765625
+            ],
+            [
+              0.24556200916230364,
+              0.40234375
+            ]
+          ],
+          "objectness_score": 0.7296152114868164,
+          "words": [
+            {
+              "value": "Product",
+              "confidence": 0.930168867111206,
+              "geometry": [
+                [
+                  0.1344281740837696,
+                  0.384765625
+                ],
+                [
+                  0.24556200916230364,
+                  0.40234375
+                ]
+              ],
+              "objectness_score": 0.7296152114868164,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.04669093586387435,
+              0.4189453125
+            ],
+            [
+              0.13735274869109948,
+              0.4365234375
+            ]
+          ],
+          "objectness_score": 0.8109911680221558,
+          "words": [
+            {
+              "value": "MEDS:",
+              "confidence": 0.9945922493934631,
+              "geometry": [
+                [
+                  0.04669093586387435,
+                  0.4189453125
+                ],
+                [
+                  0.13735274869109948,
+                  0.4365234375
+                ]
+              ],
+              "objectness_score": 0.8109911680221558,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.388866164921466,
+              0.419921875
+            ],
+            [
+              0.4692919666230366,
+              0.4345703125
+            ]
+          ],
+          "objectness_score": 0.8607797026634216,
+          "words": [
+            {
+              "value": "Name",
+              "confidence": 0.9144891500473022,
+              "geometry": [
+                [
+                  0.388866164921466,
+                  0.419921875
+                ],
+                [
+                  0.4692919666230366,
+                  0.4345703125
+                ]
+              ],
+              "objectness_score": 0.8607797026634216,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.5994355366492147,
+              0.4169921875
+            ],
+            [
+              0.6754744764397906,
+              0.4345703125
+            ]
+          ],
+          "objectness_score": 0.8423349261283875,
+          "words": [
+            {
+              "value": "Dose",
+              "confidence": 0.9983929991722107,
+              "geometry": [
+                [
+                  0.5994355366492147,
+                  0.4169921875
+                ],
+                [
+                  0.6754744764397906,
+                  0.4345703125
+                ]
+              ],
+              "objectness_score": 0.8423349261283875,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.7251922447643979,
+              0.416015625
+            ],
+            [
+              0.8114671956806283,
+              0.43359375
+            ]
+          ],
+          "objectness_score": 0.8336243629455566,
+          "words": [
+            {
+              "value": "Route",
+              "confidence": 0.9973316192626953,
+              "geometry": [
+                [
+                  0.7251922447643979,
+                  0.416015625
+                ],
+                [
+                  0.8114671956806283,
+                  0.43359375
+                ]
+              ],
+              "objectness_score": 0.8336243629455566,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8699586878272252,
+              0.4140625
+            ],
+            [
+              0.9386861910994764,
+              0.431640625
+            ]
+          ],
+          "objectness_score": 0.8692139983177185,
+          "words": [
+            {
+              "value": "Time",
+              "confidence": 0.9990901947021484,
+              "geometry": [
+                [
+                  0.8699586878272252,
+                  0.4140625
+                ],
+                [
+                  0.9386861910994764,
+                  0.431640625
+                ]
+              ],
+              "objectness_score": 0.8692139983177185,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.12272987565445026,
+              0.447265625
+            ],
+            [
+              0.2587225948952879,
+              0.46875
+            ]
+          ],
+          "objectness_score": 0.7636452913284302,
+          "words": [
+            {
+              "value": "Analgesic",
+              "confidence": 0.9967489242553711,
+              "geometry": [
+                [
+                  0.12272987565445026,
+                  0.447265625
+                ],
+                [
+                  0.2587225948952879,
+                  0.46875
+                ]
+              ],
+              "objectness_score": 0.7636452913284302,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.10810700261780104,
+              0.4677734375
+            ],
+            [
+              0.27334546793193715,
+              0.48828125
+            ]
+          ],
+          "objectness_score": 0.7631322145462036,
+          "words": [
+            {
+              "value": "(e.g,",
+              "confidence": 0.9655120372772217,
+              "geometry": [
+                [
+                  0.10810700261780104,
+                  0.46875
+                ],
+                [
+                  0.165136207460733,
+                  0.48828125
+                ]
+              ],
+              "objectness_score": 0.8056538105010986,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Ketamine,",
+              "confidence": 0.9634931683540344,
+              "geometry": [
+                [
+                  0.16659849476439792,
+                  0.4677734375
+                ],
+                [
+                  0.27334546793193715,
+                  0.486328125
+                ]
+              ],
+              "objectness_score": 0.7206106185913086,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.14173961060209422,
+              0.486328125
+            ],
+            [
+              0.23971285994764396,
+              0.5048828125
+            ]
+          ],
+          "objectness_score": 0.7615542411804199,
+          "words": [
+            {
+              "value": "Fentanyl,",
+              "confidence": 0.9937959909439087,
+              "geometry": [
+                [
+                  0.14173961060209422,
+                  0.486328125
+                ],
+                [
+                  0.23971285994764396,
+                  0.5048828125
+                ]
+              ],
+              "objectness_score": 0.7615542411804199,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.1388150359947644,
+              0.5048828125
+            ],
+            [
+              0.24263743455497383,
+              0.521484375
+            ]
+          ],
+          "objectness_score": 0.8745620846748352,
+          "words": [
+            {
+              "value": "Morphine)",
+              "confidence": 0.9760689735412598,
+              "geometry": [
+                [
+                  0.1388150359947644,
+                  0.5048828125
+                ],
+                [
+                  0.24263743455497383,
+                  0.521484375
+                ]
+              ],
+              "objectness_score": 0.8745620846748352,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.12565445026178013,
+              0.5283203125
+            ],
+            [
+              0.26018488219895286,
+              0.546875
+            ]
+          ],
+          "objectness_score": 0.70827716588974,
+          "words": [
+            {
+              "value": "Antibiotic",
+              "confidence": 0.7593485713005066,
+              "geometry": [
+                [
+                  0.12565445026178013,
+                  0.5283203125
+                ],
+                [
+                  0.26018488219895286,
+                  0.546875
+                ]
+              ],
+              "objectness_score": 0.70827716588974,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.09202184227748689,
+              0.5517578125
+            ],
+            [
+              0.28796834096858637,
+              0.5732421875
+            ]
+          ],
+          "objectness_score": 0.7818690836429596,
+          "words": [
+            {
+              "value": "(e.g.,",
+              "confidence": 0.5521616339683533,
+              "geometry": [
+                [
+                  0.09202184227748689,
+                  0.552734375
+                ],
+                [
+                  0.15051333442408377,
+                  0.5732421875
+                ]
+              ],
+              "objectness_score": 0.7915312647819519,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Moxifloxacin,",
+              "confidence": 0.8107988834381104,
+              "geometry": [
+                [
+                  0.15343790903141363,
+                  0.5517578125
+                ],
+                [
+                  0.28796834096858637,
+                  0.5693359375
+                ]
+              ],
+              "objectness_score": 0.7722069025039673,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.13004131217277487,
+              0.5712890625
+            ],
+            [
+              0.2528734456806283,
+              0.58984375
+            ]
+          ],
+          "objectness_score": 0.7351970076560974,
+          "words": [
+            {
+              "value": "Ertapenem)",
+              "confidence": 0.9866570830345154,
+              "geometry": [
+                [
+                  0.13004131217277487,
+                  0.5712890625
+                ],
+                [
+                  0.2528734456806283,
+                  0.58984375
+                ]
+              ],
+              "objectness_score": 0.7351970076560974,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.1549001963350785,
+              0.5986328125
+            ],
+            [
+              0.23532599803664922,
+              0.6162109375
+            ]
+          ],
+          "objectness_score": 0.7800028920173645,
+          "words": [
+            {
+              "value": "Other",
+              "confidence": 0.9984850287437439,
+              "geometry": [
+                [
+                  0.1549001963350785,
+                  0.5986328125
+                ],
+                [
+                  0.23532599803664922,
+                  0.6162109375
+                ]
+              ],
+              "objectness_score": 0.7800028920173645,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.13589046138743455,
+              0.619140625
+            ],
+            [
+              0.24994887107329844,
+              0.6396484375
+            ]
+          ],
+          "objectness_score": 0.8080670535564423,
+          "words": [
+            {
+              "value": "(e.g,",
+              "confidence": 0.7179763913154602,
+              "geometry": [
+                [
+                  0.13589046138743455,
+                  0.62109375
+                ],
+                [
+                  0.1929196662303665,
+                  0.6396484375
+                ]
+              ],
+              "objectness_score": 0.8069456219673157,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "TXA)",
+              "confidence": 0.9999512434005737,
+              "geometry": [
+                [
+                  0.19438195353403143,
+                  0.619140625
+                ],
+                [
+                  0.24994887107329844,
+                  0.638671875
+                ]
+              ],
+              "objectness_score": 0.8091884851455688,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.049615510471204216,
+              0.65234375
+            ],
+            [
+              0.6257567081151832,
+              0.6767578125
+            ]
+          ],
+          "objectness_score": 0.6929727494716644,
+          "words": [
+            {
+              "value": "OTHER:K",
+              "confidence": 0.6279153823852539,
+              "geometry": [
+                [
+                  0.049615510471204216,
+                  0.658203125
+                ],
+                [
+                  0.1929196662303665,
+                  0.6767578125
+                ]
+              ],
+              "objectness_score": 0.7980890274047852,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Combat-Pill-Pack",
+              "confidence": 0.9155882596969604,
+              "geometry": [
+                [
+                  0.19145737892670156,
+                  0.654296875
+                ],
+                [
+                  0.42981020942408377,
+                  0.6748046875
+                ]
+              ],
+              "objectness_score": 0.6571578979492188,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "L",
+              "confidence": 0.9906113743782043,
+              "geometry": [
+                [
+                  0.44881994437172773,
+                  0.6572265625
+                ],
+                [
+                  0.46782967931937175,
+                  0.6728515625
+                ]
+              ],
+              "objectness_score": 0.5688011646270752,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Eye-Shield",
+              "confidence": 0.5627585053443909,
+              "geometry": [
+                [
+                  0.48099026505235604,
+                  0.65234375
+                ],
+                [
+                  0.6257567081151832,
+                  0.673828125
+                ]
+              ],
+              "objectness_score": 0.7478429079055786,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.6710876145287958,
+              0.65234375
+            ],
+            [
+              0.6974087859947644,
+              0.6708984375
+            ]
+          ],
+          "objectness_score": 0.6094129681587219,
+          "words": [
+            {
+              "value": "R",
+              "confidence": 0.934615969657898,
+              "geometry": [
+                [
+                  0.6710876145287958,
+                  0.65234375
+                ],
+                [
+                  0.6974087859947644,
+                  0.6708984375
+                ]
+              ],
+              "objectness_score": 0.6094129681587219,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8187786321989529,
+              0.6513671875
+            ],
+            [
+              0.9006667212041886,
+              0.6708984375
+            ]
+          ],
+          "objectness_score": 0.868825376033783,
+          "words": [
+            {
+              "value": "Splint",
+              "confidence": 0.9927652478218079,
+              "geometry": [
+                [
+                  0.8187786321989529,
+                  0.6513671875
+                ],
+                [
+                  0.9006667212041886,
+                  0.6708984375
+                ]
+              ],
+              "objectness_score": 0.868825376033783,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.4663673920157068,
+              0.6796875
+            ],
+            [
+              0.5307080333769634,
+              0.6982421875
+            ]
+          ],
+          "objectness_score": 0.8191455602645874,
+          "words": [
+            {
+              "value": "Type:",
+              "confidence": 0.9983401298522949,
+              "geometry": [
+                [
+                  0.4663673920157068,
+                  0.6796875
+                ],
+                [
+                  0.5307080333769634,
+                  0.6982421875
+                ]
+              ],
+              "objectness_score": 0.8191455602645874,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8421752290575917,
+              0.66796875
+            ],
+            [
+              0.947459914921466,
+              0.69140625
+            ]
+          ],
+          "objectness_score": 0.7481471101442972,
+          "words": [
+            {
+              "value": "I",
+              "confidence": 0.7487304210662842,
+              "geometry": [
+                [
+                  0.8421752290575917,
+                  0.6728515625
+                ],
+                [
+                  0.8626472513089005,
+                  0.6845703125
+                ]
+              ],
+              "objectness_score": 0.6773074269294739,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "in",
+              "confidence": 0.6091905236244202,
+              "geometry": [
+                [
+                  0.8758078370418848,
+                  0.6728515625
+                ],
+                [
+                  0.9109027323298429,
+                  0.689453125
+                ]
+              ],
+              "objectness_score": 0.7938617467880249,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "ke",
+              "confidence": 0.5097090601921082,
+              "geometry": [
+                [
+                  0.9123650196335078,
+                  0.66796875
+                ],
+                [
+                  0.947459914921466,
+                  0.69140625
+                ]
+              ],
+              "objectness_score": 0.7732721567153931,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.08471040575916228,
+              0.6787109375
+            ],
+            [
+              0.4575936681937173,
+              0.7041015625
+            ]
+          ],
+          "objectness_score": 0.5599546432495117,
+          "words": [
+            {
+              "value": "Hypothermia-Prevention",
+              "confidence": 0.7152803937594095,
+              "geometry": [
+                [
+                  0.08471040575916228,
+                  0.6787109375
+                ],
+                [
+                  0.4575936681937173,
+                  0.7041015625
+                ]
+              ],
+              "objectness_score": 0.5599546432495117,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03206806282722513,
+              0.7109375
+            ],
+            [
+              0.14173961060209422,
+              0.7294921875
+            ]
+          ],
+          "objectness_score": 0.8149979710578918,
+          "words": [
+            {
+              "value": "NOTES:",
+              "confidence": 0.9569248557090759,
+              "geometry": [
+                [
+                  0.03206806282722513,
+                  0.7109375
+                ],
+                [
+                  0.14173961060209422,
+                  0.7294921875
+                ]
+              ],
+              "objectness_score": 0.8149979710578918,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03353035013089006,
+              0.8935546875
+            ],
+            [
+              0.2821191917539267,
+              0.9111328125
+            ]
+          ],
+          "objectness_score": 0.8308285772800446,
+          "words": [
+            {
+              "value": "FIRST",
+              "confidence": 0.5092275738716125,
+              "geometry": [
+                [
+                  0.03353035013089006,
+                  0.8935546875
+                ],
+                [
+                  0.11541843913612565,
+                  0.9111328125
+                ]
+              ],
+              "objectness_score": 0.8612263798713684,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "RESPONDER",
+              "confidence": 0.9978354573249817,
+              "geometry": [
+                [
+                  0.11688072643979058,
+                  0.89453125
+                ],
+                [
+                  0.2821191917539267,
+                  0.9111328125
+                ]
+              ],
+              "objectness_score": 0.8004307746887207,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.03937949934554974,
+              0.9150390625
+            ],
+            [
+              0.24994887107329844,
+              0.935546875
+            ]
+          ],
+          "objectness_score": 0.8027012348175049,
+          "words": [
+            {
+              "value": "NAME",
+              "confidence": 0.9606125950813293,
+              "geometry": [
+                [
+                  0.03937949934554974,
+                  0.9150390625
+                ],
+                [
+                  0.11834301374345552,
+                  0.93359375
+                ]
+              ],
+              "objectness_score": 0.7801218032836914,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "(Last,",
+              "confidence": 0.9984381794929504,
+              "geometry": [
+                [
+                  0.1198053010471204,
+                  0.9169921875
+                ],
+                [
+                  0.18122136780104714,
+                  0.935546875
+                ]
+              ],
+              "objectness_score": 0.7814457416534424,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "First):",
+              "confidence": 0.999115526676178,
+              "geometry": [
+                [
+                  0.18414594240837695,
+                  0.91796875
+                ],
+                [
+                  0.24994887107329844,
+                  0.935546875
+                ]
+              ],
+              "objectness_score": 0.8465361595153809,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.7208053828534031,
+              0.9091796875
+            ],
+            [
+              0.8246277814136126,
+              0.927734375
+            ]
+          ],
+          "objectness_score": 0.7736993730068207,
+          "words": [
+            {
+              "value": "LAST",
+              "confidence": 0.9878284931182861,
+              "geometry": [
+                [
+                  0.7208053828534031,
+                  0.91015625
+                ],
+                [
+                  0.7953820353403142,
+                  0.927734375
+                ]
+              ],
+              "objectness_score": 0.8263624906539917,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "4:",
+              "confidence": 0.9914542436599731,
+              "geometry": [
+                [
+                  0.7939197480366492,
+                  0.9091796875
+                ],
+                [
+                  0.8246277814136126,
+                  0.927734375
+                ]
+              ],
+              "objectness_score": 0.7210362553596497,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.036454924738219874,
+              0.943359375
+            ],
+            [
+              0.44297079515706805,
+              0.962890625
+            ]
+          ],
+          "objectness_score": 0.806774248679479,
+          "words": [
+            {
+              "value": "DD",
+              "confidence": 0.9981023669242859,
+              "geometry": [
+                [
+                  0.036454924738219874,
+                  0.943359375
+                ],
+                [
+                  0.07739896924083772,
+                  0.9599609375
+                ]
+              ],
+              "objectness_score": 0.8091321587562561,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "Form",
+              "confidence": 0.9997658133506775,
+              "geometry": [
+                [
+                  0.08032354384816753,
+                  0.943359375
+                ],
+                [
+                  0.15051333442408377,
+                  0.9609375
+                ]
+              ],
+              "objectness_score": 0.8118569850921631,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "1380,",
+              "confidence": 0.9927782416343689,
+              "geometry": [
+                [
+                  0.1549001963350785,
+                  0.9443359375
+                ],
+                [
+                  0.22362769960732987,
+                  0.962890625
+                ]
+              ],
+              "objectness_score": 0.8028100728988647,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "JUN",
+              "confidence": 0.9910498857498169,
+              "geometry": [
+                [
+                  0.22655227421465968,
+                  0.943359375
+                ],
+                [
+                  0.28650605366492143,
+                  0.9609375
+                ]
+              ],
+              "objectness_score": 0.7877433896064758,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "2014",
+              "confidence": 0.993613064289093,
+              "geometry": [
+                [
+                  0.2894306282722513,
+                  0.943359375
+                ],
+                [
+                  0.35377126963350786,
+                  0.9609375
+                ]
+              ],
+              "objectness_score": 0.803620457649231,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "(Back)",
+              "confidence": 0.9953327775001526,
+              "geometry": [
+                [
+                  0.3581581315445026,
+                  0.943359375
+                ],
+                [
+                  0.44297079515706805,
+                  0.962890625
+                ]
+              ],
+              "objectness_score": 0.8254824280738831,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        },
+        {
+          "geometry": [
+            [
+              0.8056180464659686,
+              0.935546875
+            ],
+            [
+              0.9679319371727748,
+              0.955078125
+            ]
+          ],
+          "objectness_score": 0.7539959847927094,
+          "words": [
+            {
+              "value": "TCCC",
+              "confidence": 0.9989125728607178,
+              "geometry": [
+                [
+                  0.8056180464659686,
+                  0.9365234375
+                ],
+                [
+                  0.8831192735602094,
+                  0.955078125
+                ]
+              ],
+              "objectness_score": 0.7271960377693176,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            },
+            {
+              "value": "CARD",
+              "confidence": 0.8050200939178467,
+              "geometry": [
+                [
+                  0.8860438481675392,
+                  0.935546875
+                ],
+                [
+                  0.9679319371727748,
+                  0.953125
+                ]
+              ],
+              "objectness_score": 0.7807959318161011,
+              "crop_orientation": {
+                "value": 0,
+                "confidence": null
+              }
+            }
+          ]
+        }
+      ],
+      "artefacts": []
+    },
+    {
+      "geometry": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "lines": [
+        {
+          "geometry": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "words": []
+        }
+      ]
+    },
+    {
+      "geometry": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "lines": [
+        {
+          "geometry": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "words": [
+            {
+              "value": "field_battle_roster_back",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.4453846153846154,
+                  0.04314329738058552
+                ],
+                [
+                  0.8207692307692308,
+                  0.06779661016949153
+                ]
+              ]
+            },
+            {
+              "value": "field_image_priority_back",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.4753846153846154,
+                  0.07909604519774012
+                ],
+                [
+                  0.49846153846153846,
+                  0.09347714432460195
+                ]
+              ]
+            },
+            {
+              "value": "field_image_evac_back",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.3330769230769231,
+                  0.08063687724704674
+                ],
+                [
+                  0.3569230769230769,
+                  0.09450436569080636
+                ]
+              ]
+            },
+            {
+              "value": "field_image_routine_back",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.6292307692307693,
+                  0.07960965588084232
+                ],
+                [
+                  0.6492307692307693,
+                  0.09296353364149974
+                ]
+              ]
+            },
+            {
+              "value": "field_image_tq_extremity",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.13692307692307693,
+                  0.1391884951206985
+                ],
+                [
+                  0.16076923076923078,
+                  0.15356959424756034
+                ]
+              ]
+            },
+            {
+              "value": "field_image_tq_junctional",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.3069230769230769,
+                  0.13662044170518747
+                ],
+                [
+                  0.33,
+                  0.1504879301489471
+                ]
+              ]
+            },
+            {
+              "value": "field_image_tq_truncal",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.4946153846153846,
+                  0.13559322033898305
+                ],
+                [
+                  0.5184615384615384,
+                  0.14946070878274267
+                ]
+              ]
+            },
+            {
+              "value": "field_tq_type",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.6776923076923077,
+                  0.1263482280431433
+                ],
+                [
+                  0.9561538461538461,
+                  0.1504879301489471
+                ]
+              ]
+            },
+            {
+              "value": "field_image_dressing_hemostatic",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.21076923076923076,
+                  0.16846430405752438
+                ],
+                [
+                  0.23307692307692307,
+                  0.18335901386748846
+                ]
+              ]
+            },
+            {
+              "value": "field_image_dressing_pressure",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.40615384615384614,
+                  0.16692347200821778
+                ],
+                [
+                  0.42923076923076925,
+                  0.18233179250128403
+                ]
+              ]
+            },
+            {
+              "value": "field_image_dressing_other",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5684615384615385,
+                  0.16640986132511557
+                ],
+                [
+                  0.5923076923076923,
+                  0.1807909604519774
+                ]
+              ]
+            },
+            {
+              "value": "field_dressing_type",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.6784615384615384,
+                  0.15151515151515152
+                ],
+                [
+                  0.9584615384615385,
+                  0.1807909604519774
+                ]
+              ]
+            },
+            {
+              "value": "field_image_airway_intact",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.07923076923076923,
+                  0.20390344119157677
+                ],
+                [
+                  0.10461538461538461,
+                  0.21931176168464303
+                ]
+              ]
+            },
+            {
+              "value": "field_image_airway_npa",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.1946153846153846,
+                  0.20236260914227017
+                ],
+                [
+                  0.21769230769230768,
+                  0.216743708269132
+                ]
+              ]
+            },
+            {
+              "value": "field_image_airway_cric",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2969230769230769,
+                  0.20082177709296353
+                ],
+                [
+                  0.32076923076923075,
+                  0.2162300975860298
+                ]
+              ]
+            },
+            {
+              "value": "field_image_airway_et_tube",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.40615384615384614,
+                  0.20082177709296353
+                ],
+                [
+                  0.42923076923076925,
+                  0.21417565485362094
+                ]
+              ]
+            },
+            {
+              "value": "field_image_airway_sga",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5692307692307692,
+                  0.1987673343605547
+                ],
+                [
+                  0.5915384615384616,
+                  0.21314843348741655
+                ]
+              ]
+            },
+            {
+              "value": "field_airway_type",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.6784615384615384,
+                  0.18181818181818182
+                ],
+                [
+                  0.9584615384615385,
+                  0.21263482280431434
+                ]
+              ]
+            },
+            {
+              "value": "field_image_breathing_o2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.0823076923076923,
+                  0.23831535695942477
+                ],
+                [
+                  0.10461538461538461,
+                  0.2526964560862866
+                ]
+              ]
+            },
+            {
+              "value": "field_image_breathing_needle_d",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.16076923076923078,
+                  0.23780174627632256
+                ],
+                [
+                  0.18307692307692308,
+                  0.25064201335387776
+                ]
+              ]
+            },
+            {
+              "value": "field_image_breathing_chest_seal",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.32461538461538464,
+                  0.2347200821777093
+                ],
+                [
+                  0.3476923076923077,
+                  0.24910118130457112
+                ]
+              ]
+            },
+            {
+              "value": "field_image_breathing_chest_tube",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.52,
+                  0.23061119671289163
+                ],
+                [
+                  0.5484615384615384,
+                  0.24910118130457112
+                ]
+              ]
+            },
+            {
+              "value": "field_breathing_type",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7046153846153846,
+                  0.21468926553672316
+                ],
+                [
+                  0.96,
+                  0.24601951720595788
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_name_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28384615384615386,
+                  0.28762198253723675
+                ],
+                [
+                  0.5692307692307692,
+                  0.31587057010785824
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_volume_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5684615384615385,
+                  0.28710837185413457
+                ],
+                [
+                  0.7015384615384616,
+                  0.31535695942475606
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_route_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7007692307692308,
+                  0.2850539291217257
+                ],
+                [
+                  0.833076923076923,
+                  0.3133025166923472
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_time_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.833076923076923,
+                  0.2835130970724191
+                ],
+                [
+                  0.9661538461538461,
+                  0.3107344632768362
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_name_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2846153846153846,
+                  0.3163841807909605
+                ],
+                [
+                  0.5684615384615385,
+                  0.3441191576784797
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_volume_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5684615384615385,
+                  0.31535695942475606
+                ],
+                [
+                  0.7007692307692308,
+                  0.3430919363122753
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_route_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7015384615384616,
+                  0.31432973805855163
+                ],
+                [
+                  0.8353846153846154,
+                  0.3420647149460709
+                ]
+              ]
+            },
+            {
+              "value": "field_fluid_time_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.833076923076923,
+                  0.3133025166923472
+                ],
+                [
+                  0.9669230769230769,
+                  0.3405238828967643
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_name_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2846153846153846,
+                  0.34720082177709294
+                ],
+                [
+                  0.5676923076923077,
+                  0.37596302003081666
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_volume_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5684615384615385,
+                  0.3446327683615819
+                ],
+                [
+                  0.7015384615384616,
+                  0.37493579866461224
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_route_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7007692307692308,
+                  0.3446327683615819
+                ],
+                [
+                  0.8338461538461538,
+                  0.3739085772984078
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_time_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.833076923076923,
+                  0.3415511042629687
+                ],
+                [
+                  0.9669230769230769,
+                  0.371854134565999
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_name_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2853846153846154,
+                  0.37801746276322545
+                ],
+                [
+                  0.5692307692307692,
+                  0.40575243965074476
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_volume_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5676923076923077,
+                  0.37596302003081666
+                ],
+                [
+                  0.7023076923076923,
+                  0.4052388289676425
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_route_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7007692307692308,
+                  0.37442218798151
+                ],
+                [
+                  0.8361538461538461,
+                  0.40318438623523367
+                ]
+              ]
+            },
+            {
+              "value": "field_bloodproduct_time_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.3728813559322034
+                ],
+                [
+                  0.9684615384615385,
+                  0.40164355418592707
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_name_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28615384615384615,
+                  0.43759630200308164
+                ],
+                [
+                  0.5707692307692308,
+                  0.4632768361581921
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_dose_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5684615384615385,
+                  0.4350282485875706
+                ],
+                [
+                  0.7023076923076923,
+                  0.46122239342578325
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_route_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7007692307692308,
+                  0.4340010272213662
+                ],
+                [
+                  0.8353846153846154,
+                  0.46070878274268107
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_time_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.4324601951720596
+                ],
+                [
+                  0.9692307692307692,
+                  0.45968156137647664
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_name_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28692307692307695,
+                  0.46533127889060094
+                ],
+                [
+                  0.5707692307692308,
+                  0.49357986646122237
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_dose_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5707692307692308,
+                  0.4632768361581921
+                ],
+                [
+                  0.703076923076923,
+                  0.49255264509501795
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_route_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.703076923076923,
+                  0.46276322547508986
+                ],
+                [
+                  0.8376923076923077,
+                  0.49203903441191577
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_time_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8369230769230769,
+                  0.46122239342578325
+                ],
+                [
+                  0.9692307692307692,
+                  0.49049820236260916
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_name_3",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28692307692307695,
+                  0.49512069851052903
+                ],
+                [
+                  0.5723076923076923,
+                  0.5249101181304571
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_dose_3",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5707692307692308,
+                  0.49357986646122237
+                ],
+                [
+                  0.7038461538461539,
+                  0.5233692860811505
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_route_3",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.703076923076923,
+                  0.4930662557781202
+                ],
+                [
+                  0.8369230769230769,
+                  0.522342064714946
+                ]
+              ]
+            },
+            {
+              "value": "field_analgesic_time_3",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.49049820236260916
+                ],
+                [
+                  0.97,
+                  0.5218284540318439
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_name_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28692307692307695,
+                  0.5259373394966615
+                ],
+                [
+                  0.5715384615384616,
+                  0.5536723163841808
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_dose_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5707692307692308,
+                  0.5228556753980482
+                ],
+                [
+                  0.703076923076923,
+                  0.5531587057010786
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_route_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.703076923076923,
+                  0.522342064714946
+                ],
+                [
+                  0.8353846153846154,
+                  0.5521314843348741
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_time_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.522342064714946
+                ],
+                [
+                  0.9692307692307692,
+                  0.551617873651772
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_name_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2876923076923077,
+                  0.5562403697996918
+                ],
+                [
+                  0.5723076923076923,
+                  0.5850025680534156
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_dose_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5692307692307692,
+                  0.5536723163841808
+                ],
+                [
+                  0.7038461538461539,
+                  0.5844889573703133
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_route_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7023076923076923,
+                  0.5521314843348741
+                ],
+                [
+                  0.8376923076923077,
+                  0.5834617360041089
+                ]
+              ]
+            },
+            {
+              "value": "field_antibiotic_time_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.5511042629686698
+                ],
+                [
+                  0.9707692307692307,
+                  0.5829481253210067
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_name_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.28692307692307695,
+                  0.5855161787365177
+                ],
+                [
+                  0.5738461538461539,
+                  0.6147919876733436
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_dose_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5692307692307692,
+                  0.5844889573703133
+                ],
+                [
+                  0.7053846153846154,
+                  0.6142783769902413
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_route_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7023076923076923,
+                  0.5824345146379045
+                ],
+                [
+                  0.84,
+                  0.6137647663071392
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_time_1",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8353846153846154,
+                  0.5814072932717
+                ],
+                [
+                  0.9707692307692307,
+                  0.6127375449409348
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_name_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2876923076923077,
+                  0.6163328197226502
+                ],
+                [
+                  0.5738461538461539,
+                  0.6445814072932717
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_dose_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5723076923076923,
+                  0.6147919876733436
+                ],
+                [
+                  0.7061538461538461,
+                  0.6435541859270673
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_route_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7038461538461539,
+                  0.6127375449409348
+                ],
+                [
+                  0.8384615384615385,
+                  0.6435541859270673
+                ]
+              ]
+            },
+            {
+              "value": "field_othermed_time_2",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8376923076923077,
+                  0.6127375449409348
+                ],
+                [
+                  0.9723076923076923,
+                  0.6435541859270673
+                ]
+              ]
+            },
+            {
+              "value": "field_image_combat_pill_pack",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.16538461538461538,
+                  0.6584488957370314
+                ],
+                [
+                  0.19153846153846155,
+                  0.6743708269131998
+                ]
+              ]
+            },
+            {
+              "value": "field_image_eye_shield",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.44769230769230767,
+                  0.6548536209553159
+                ],
+                [
+                  0.47384615384615386,
+                  0.6707755521314843
+                ]
+              ]
+            },
+            {
+              "value": "field_image_eye_shield_right",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.6415384615384615,
+                  0.6543400102722137
+                ],
+                [
+                  0.6684615384615384,
+                  0.6702619414483821
+                ]
+              ]
+            },
+            {
+              "value": "field_image_eye_shield_left",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.7069230769230769,
+                  0.652799178222907
+                ],
+                [
+                  0.7338461538461538,
+                  0.66974833076528
+                ]
+              ]
+            },
+            {
+              "value": "field_image_splint",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.79,
+                  0.652799178222907
+                ],
+                [
+                  0.8146153846153846,
+                  0.6682074987159733
+                ]
+              ]
+            },
+            {
+              "value": "field_image_hypothermia",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.09769230769230769,
+                  0.6841294298921418
+                ],
+                [
+                  0.12307692307692308,
+                  0.7005649717514124
+                ]
+              ]
+            },
+            {
+              "value": "field_hypothermia_type",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.5323076923076923,
+                  0.6702619414483821
+                ],
+                [
+                  0.97,
+                  0.6964560862865947
+                ]
+              ]
+            },
+            {
+              "value": "field_notes",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.02923076923076923,
+                  0.70929635336415
+                ],
+                [
+                  0.9738461538461538,
+                  0.8823831535695943
+                ]
+              ]
+            },
+            {
+              "value": "field_first_responder_name",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.2530769230769231,
+                  0.8911145351823317
+                ],
+                [
+                  0.7169230769230769,
+                  0.9327170005136107
+                ]
+              ]
+            },
+            {
+              "value": "field_first_responder_last_4",
+              "confidence": 1.0,
+              "geometry": [
+                [
+                  0.8176923076923077,
+                  0.8834103749357987
+                ],
+                [
+                  0.9723076923076923,
+                  0.9337442218798151
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
