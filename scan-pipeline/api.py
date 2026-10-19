@@ -20,7 +20,7 @@ job_store: Dict[str, Dict[str, Any]] = {}
 # Path to your source reference JSON/dictionary used in the pipeline
 # Update this path if your template source json is named differently or located elsewhere
 HERE = Path(__file__).parent
-DEFAULT_SOURCE_PATH = HERE / "source.json"  # Adjust if necessary, or pass a default template
+DEFAULT_SOURCE_PATH = HERE / "front_source.json"  # Adjust if necessary, or pass a default template
 
 def load_default_source() -> dict:
     if DEFAULT_SOURCE_PATH.exists():

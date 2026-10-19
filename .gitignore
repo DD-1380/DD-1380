@@ -17,4 +17,3 @@ tools/make_trocr_dataset.py
 tools/train_trocr.py
 tools/time_card.py
 
-models/trocr-*/
