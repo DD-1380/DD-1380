@@ -42,7 +42,10 @@ def overlay(page, image, checkboxResults=None, injuryResults=None):
         if value in checkboxResults:
             label += f" ({checkboxResults[value]['label']})"
         elif value in injuryResults:
-            label += f" ({injuryResults[value]})"
+            result = injuryResults[value]
+            if isinstance(result, list):
+                result = ", ".join(result)
+            label += f" ({result})"
 
         MIN_SCALE = 0.25 * render_scale
         MAX_SCALE = 0.45 * render_scale

@@ -6,6 +6,9 @@ import cv2
 import gradio as gr
 import numpy as np
 
+from pillow_heif import register_heif_opener
+register_heif_opener()
+
 from pipeline import process_document
 
 # converts BGR to RGB.

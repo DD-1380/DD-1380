@@ -13,7 +13,7 @@ from overlay import overlay
 from extract_fields import extract_fields
 from checkbox_crop import classify_checkbox, is_checkbox_field
 from injury_crop import crop_injury_fields
-from llm_injury import classify_injuries
+from llm_injury import blank_crops_for, classify_injuries
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -35,7 +35,7 @@ def ocr_page(model, image_bytes: bytes) -> dict:
 def get_field_locations(source: dict):
     checkboxArr = []
     textBoxArr = []
-    
+
     for block in source["blocks"]:
         for line in block["lines"]:
             for word in line["words"]:
@@ -43,7 +43,7 @@ def get_field_locations(source: dict):
                     checkboxArr.append(word)
                 else:
                     textBoxArr.append(word)
-                    
+
     return checkboxArr, textBoxArr
 
 # processes the document.
@@ -63,5 +63,5 @@ async def process_document(
     # Field OCR and injury classification both encode crops and call into
     # native libraries. Run one after the other so those calls do not overlap.
     fields = await asyncio.to_thread(extract_fields, flat, source)
-    injuries = await asyncio.to_thread(classify_injuries, crop_injury_fields(flat, source))
+    injuries = await asyncio.to_thread(classify_injuries, crop_injury_fields(flat, source), blank_crops_for(source, flat.shape))
     return flat, overlay(source, flat, checkboxResults, injuries), fields, checkboxResults, injuries
