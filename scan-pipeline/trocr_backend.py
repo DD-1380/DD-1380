@@ -1,5 +1,6 @@
 import os
 import threading
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -11,7 +12,21 @@ import numpy as np
 #
 # TROCR_BEAMS=1 is ~2-3x faster than the default 4, usually for a small accuracy cost.
 
-MODEL_NAME = os.environ.get("TROCR_MODEL", "microsoft/trocr-base-handwritten")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+def model_source() -> str:
+    model_dir = os.environ.get("TROCR_MODEL_DIR")
+    if not model_dir:
+        return os.environ.get("TROCR_MODEL", "microsoft/trocr-base-handwritten")
+    path = Path(model_dir).expanduser()
+    if not path.is_absolute():
+        path = REPO_ROOT / path
+    if not path.is_dir():
+        raise FileNotFoundError(f"TROCR_MODEL_DIR is not a directory: {path}")
+    return str(path)
+
+
+MODEL_NAME = model_source()
 NUM_BEAMS = int(os.environ.get("TROCR_BEAMS", "4"))
 MAX_TOKENS = 48
 BATCH = int(os.environ.get("TROCR_BATCH", "1"))    # fields per GPU call; batching was slower on an RTX 4060
