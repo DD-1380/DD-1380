@@ -1,6 +1,10 @@
-docscan==1.0.6
+imutils
 rembg[gpu]
 python-doctr[torch]==1.0.1
-onnxruntime-gpu==1.19.2
-opencv-python-headless
+torch>=2.14.1
+onnxruntime-gpu>=1.23.2
+opencv-python>=4.5.0,<5
 gradio>=6.19.0
+openai>=2.45.0
+tensorflow>=2.21.0
+transformers>=5.19.0

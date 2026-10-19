@@ -1,0 +1,19 @@
+.venv/
+.cache/
+__pycache__/
+.gradio/
+
+dataset/
+.cache/
+
+# local labeling and training tools
+tools/align_images.py
+tools/eval_truth.py
+tools/check_truth.py
+tools/fix_truth.py
+tools/truth_editor.py
+tools/template_maker.py
+tools/make_trocr_dataset.py
+tools/train_trocr.py
+tools/time_card.py
+
