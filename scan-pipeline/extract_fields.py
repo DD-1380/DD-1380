@@ -1,10 +1,17 @@
 import json
+import re
 from concurrent.futures import ThreadPoolExecutor
 
 import cv2
 import numpy as np
 
 from ocr_backends import ocr, workers
+
+# Printed labels that sit inside a field's box, stripped from the start of its reading.
+PRINTED_LABELS = {
+    "field_notes": r"NOTES\s*:?",
+    "field_first_responder_name": r"ER\b[\s:.,-]*",
+}
 
 # Extract bounding boxes for all text fields from source.json.
 def get_field_boxes(source: dict) -> dict:
@@ -39,6 +46,8 @@ def extract_fields(aligned_image: np.ndarray, source: dict) -> dict:
 
     output = {}
     for field_key, text in zip(field_keys, texts):
+        if field_key in PRINTED_LABELS:
+            text = re.sub(rf"^\s*{PRINTED_LABELS[field_key]}\s*", "", text, flags=re.IGNORECASE)
 
         # The BloodPressue boxes have a printed "/", so a reading of just "/" means the box is blank.
         if field_key.startswith("field_blood_") and text.replace("/", "").strip() == "":
