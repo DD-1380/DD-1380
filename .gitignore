@@ -18,3 +18,5 @@ tools/train_trocr.py
 tools/time_card.py
 
 models/trocr-*/
+
+scan-pipeline/*_source.json
