@@ -1,5 +1,6 @@
 import asyncio
 import json
+from pathlib import Path
 
 import cv2
 import gradio as gr
@@ -17,8 +18,8 @@ def to_bytes(image: np.ndarray | None) -> bytes | None:
     return cv2.imencode(".jpg", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))[1].tobytes()
 
 # processes the card asynchronously with process_card()
-async def process_async(front: np.ndarray | None, back: np.ndarray | None):
-    card = await process_card(to_bytes(front), to_bytes(back))
+async def process_async(front: np.ndarray | None, back: np.ndarray | None, sources: dict):
+    card = await process_card(to_bytes(front), to_bytes(back), sources)
     images = []
     for side in ("front", "back"):
         result = card["sides"].get(side)
@@ -31,17 +32,31 @@ async def process_async(front: np.ndarray | None, back: np.ndarray | None):
     )
 
 # processes the card synchronously with process_async()
-def process(front: np.ndarray | None, back: np.ndarray | None):
+def process(front: np.ndarray | None, back: np.ndarray | None,
+            front_source_file: str | None, back_source_file: str | None):
     if front is None and back is None:
         raise gr.Error("Upload a photo of the front, the back, or both.")
-    return asyncio.run(process_async(front, back))
+    sources = {}
+    for side, photo, source_file in (("front", front, front_source_file), ("back", back, back_source_file)):
+        if photo is None:
+            continue
+        if not source_file:
+            raise gr.Error(f"Upload the {side} source JSON to go with the {side} photo.")
+        try:
+            sources[side] = json.loads(Path(source_file).read_text())
+        except (OSError, ValueError) as error:
+            raise gr.Error(f"Could not read the {side} source JSON: {error}")
+    return asyncio.run(process_async(front, back, sources))
 
 # creates the gradio interface.
 with gr.Blocks(title="Scan Pipeline") as demo:
-    gr.Markdown("Upload the front and back of a card to scan, align, read and score it. Either side can be left out.")
+    gr.Markdown("Upload the front and back of a card, each with its source OCR JSON, to scan, align, read and score it. Either side can be left out, but a photo needs its source JSON.")
     with gr.Row():
         front = gr.Image(label="Front photo", type="numpy", sources=["upload", "webcam"])
         back = gr.Image(label="Back photo", type="numpy", sources=["upload", "webcam"])
+    with gr.Row():
+        front_source = gr.File(label="Front source OCR JSON", file_types=[".json"])
+        back_source = gr.File(label="Back source OCR JSON", file_types=[".json"])
     process_btn = gr.Button("Process", variant="primary")
     with gr.Row():
         front_out = gr.Image(label="Front transformed")
@@ -55,7 +70,7 @@ with gr.Blocks(title="Scan Pipeline") as demo:
         score_out = gr.Code(label="Score", language="json")
     process_btn.click(
         process,
-        [front, back],
+        [front, back, front_source, back_source],
         [front_out, front_overlay, back_out, back_overlay, fields_out, checkboxes_out, score_out],
     )
 

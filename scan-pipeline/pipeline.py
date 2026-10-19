@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 import re
 from pathlib import Path
@@ -67,14 +66,14 @@ async def process_document(
     fields = await asyncio.to_thread(extract_fields, flat, source)
     return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
 
-SOURCES = {"front": HERE / "front_source.json", "back": HERE / "back_source.json"}
 _sources = {}
 
 
-def get_source(side: str) -> dict:
-    if side not in _sources:
-        _sources[side] = json.loads(SOURCES[side].read_text())
-    return _sources[side]
+def get_source(side: str, sources: dict | None = None) -> dict:
+    source = (_sources if sources is None else sources).get(side)
+    if source is None:
+        raise ValueError(f"No {side} source JSON was provided.")
+    return source
 
 
 # "front" or "back" from a photo name like "#38_Back_Case1.HEIC", None if it doesn't say.
@@ -95,12 +94,13 @@ def pair_photos(paths) -> dict:
 
 
 # Runs each side present through process_document and scores the card. A missing side's items are not_scored.
-async def process_card(front_bytes: bytes | None = None, back_bytes: bytes | None = None) -> dict:
+async def process_card(front_bytes: bytes | None = None, back_bytes: bytes | None = None,
+                       sources: dict | None = None) -> dict:
     sides, fields, checkboxes = {}, {}, {}
     for side, raw in (("front", front_bytes), ("back", back_bytes)):
         if raw is None:
             continue
-        flat, overlaid, side_fields, side_boxes = await process_document(get_source(side), raw)
+        flat, overlaid, side_fields, side_boxes = await process_document(get_source(side, sources), raw)
         sides[side] = {"aligned": flat, "overlay": overlaid, "fields": side_fields, "checkboxes": side_boxes}
         fields.update(side_fields)
         checkboxes.update(side_boxes)
