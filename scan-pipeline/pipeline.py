@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import os
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from doctr.models import ocr_predictor
 from image_transform import warp_to_source
 from overlay import overlay
 from checkbox_crop import classify_checkbox, is_checkbox_field
+from body_diagram import process_body_diagram
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -47,7 +49,7 @@ def get_field_locations(source: dict):
 async def process_document(
     source: dict,
     raw_bytes: bytes,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, dict]:
     scan_bytes = await asyncio.to_thread(scan, raw_bytes)
     scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
 
@@ -57,5 +59,11 @@ async def process_document(
     flat = warp_to_source(scan_img, source, target)
     textBoxes, checkboxWords = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
+    bodyResults = {}
+    try:
+        bodyResults = process_body_diagram(flat, source)
+    except Exception:
+        logging.getLogger(__name__).exception("Body diagram classification failed")
     
-    return flat, overlay(source, flat, checkboxResults)
+    results = {"checkboxes": checkboxResults, "body_diagram": bodyResults}
+    return flat, overlay(source, flat, checkboxResults), results
