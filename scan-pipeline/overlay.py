@@ -14,7 +14,22 @@ def display_label(value: str) -> str:
     return value
 
 
-def overlay(page, image, checkboxResults=None):
+def _body_view(page, view_name):
+    for key in (f"body_diagram_{view_name}", view_name):
+        if isinstance(page.get(key), dict):
+            return page[key]
+    return None
+
+
+def _label_position(polygon, shape):
+    mask = np.zeros(shape, dtype=np.uint8)
+    cv2.fillPoly(mask, [polygon], 255)
+    distance = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+    y, x = np.unravel_index(int(distance.argmax()), distance.shape)
+    return x, y
+
+
+def overlay(page, image, checkboxResults=None, bodyResults=None):
     if checkboxResults is None:
         checkboxResults = {}
     h, w = image.shape[:2]
