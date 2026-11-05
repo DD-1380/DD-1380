@@ -78,7 +78,7 @@ async def process_document(
     except Exception:
         logging.getLogger(__name__).exception("Body diagram classification failed")
     
-    for view_name, view_results in body_results.items():
+    for view_name, view_results in bodyResults.items():
         for region_name, result in view_results.items():
             fields[f"field_injury_{view_name}_{region_name}"] = result["marked"]
     
