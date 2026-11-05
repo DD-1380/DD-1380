@@ -19,7 +19,7 @@ if str(SCAN_PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(SCAN_PIPELINE_DIR))
 
 from overlay import display_label  # noqa: E402
-from pipeline import process_document  # noqa: E402
+from pipeline import process_document as process_pipeline_document  # noqa: E402
 
 CHECKBOX_DATASET_DIR = ROOT / "dataset" / "checkbox"
 CHECKED_DIR = CHECKBOX_DATASET_DIR / "checked"
@@ -93,9 +93,14 @@ def collect_checkbox_words(page: dict) -> list[dict]:
 
 
 async def align_scan(source: dict, raw_path: str) -> np.ndarray:
-    raw_bytes = raw_image_bytes(raw_path)
-    transformed, _, _, _ = await process_document(source, raw_bytes)
+    transformed, _ = await process_document(source, raw_path)
     return transformed
+
+
+async def process_document(source: dict, raw_path: str) -> tuple[np.ndarray, np.ndarray]:
+    raw_bytes = raw_image_bytes(raw_path)
+    transformed, overlayed, _, _ = await process_pipeline_document(source, raw_bytes)
+    return transformed, overlayed
 
 
 def crop_word(image: np.ndarray, word: dict, padding: int = 4) -> np.ndarray | None:

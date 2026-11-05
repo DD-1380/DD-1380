@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import os
 import re
 from pathlib import Path
@@ -11,9 +12,12 @@ from doctr.models import ocr_predictor
 
 from image_transform import warp_to_source
 from overlay import overlay
+
+from body_diagram import process_body_diagram
 from extract_fields import extract_fields
 from checkbox_crop import classify_checkbox, is_checkbox_field
 from scoring import score_card
+
 
 HERE = Path(__file__).parent
 os.environ.setdefault("U2NET_HOME", str(HERE / ".cache" / "u2net"))
@@ -61,9 +65,23 @@ async def process_document(
     target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
 
     flat = warp_to_source(scan_img, source, target)
+
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
     fields = await asyncio.to_thread(extract_fields, flat, source)
+    
+    bodyResults = {}
+    bodyDebugImages = []
+    
+    try:
+        bodyResults = process_body_diagram(flat, source, bodyDebugImages)
+    except Exception:
+        logging.getLogger(__name__).exception("Body diagram classification failed")
+    
+    for view_name, view_results in body_results.items():
+        for region_name, result in view_results.items():
+            fields[f"field_injury_{view_name}_{region_name}"] = result["marked"]
+    
     return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
 
 _sources = {}

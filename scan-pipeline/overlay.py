@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 FIELD_COLOR = (0, 128, 0)       # green
 FIELD_IMAGE_COLOR = (0, 0, 255) # red
@@ -50,5 +51,36 @@ def overlay(page, image, checkboxResults=None):
 
         cv2.rectangle(vis, (px0, py0), (px1, py1), color, thickness)
         cv2.putText(vis, label, (px0, text_y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness, cv2.LINE_AA)
+
+    for view_name, view_results in (bodyResults or {}).items():
+        view = _body_view(page, view_name)
+        if not view:
+            continue
+        bbox = view.get("bbox")
+        if not bbox:
+            continue
+        x1, y1 = int(round(bbox[0])), int(round(bbox[1]))
+        for region in view.get("regions", []):
+            name = region["name"]
+            polygon = np.asarray(region["polygon"], dtype=np.int32)
+            if view.get("coordinate_frame", "full_page_aligned") != "crop_local":
+                polygon += np.asarray([x1, y1], dtype=np.int32)
+            result = view_results.get(name, {"marked": False})
+            marked = result["marked"]
+            color = (0, 0, 255) if marked else FIELD_COLOR
+            fill = vis.copy()
+            if marked:
+                cv2.fillPoly(fill, [polygon], color)
+                vis = cv2.addWeighted(fill, 0.35, vis, 0.65, 0)
+            cv2.polylines(vis, [polygon], True, color, 2 if marked else 1)
+            local_polygon = polygon - np.asarray([x1, y1], dtype=np.int32)
+            px, py = _label_position(local_polygon, (
+                max(1, int(round(bbox[3] - bbox[1]))),
+                max(1, int(round(bbox[2] - bbox[0]))),
+            ))
+            label = "marked" if marked else "unmarked"
+            anchor = (x1 + px, y1 + py)
+            cv2.putText(vis, label, anchor, cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 3, cv2.LINE_AA)
+            cv2.putText(vis, label, anchor, cv2.FONT_HERSHEY_SIMPLEX, 0.35, color, 1, cv2.LINE_AA)
 
     return vis
