@@ -41,9 +41,8 @@ def norm_to_px(pts, hw):
     return out
 
 # Takes two dicts of keypoint data and the scan shape,
-# and returns a homography matrix and inlier mask.
-def homography(source, target, scan_shape):
-    h_out, w_out = source["dimensions"]
+def homography(source, target, scan_shape, out_shape=None):
+    h_out, w_out = out_shape if out_shape is not None else source["dimensions"]
     src_pts, tgt_pts = matched_pairs(source, target)
     matrix, inliers = cv2.findHomography(
         norm_to_px(tgt_pts, scan_shape),

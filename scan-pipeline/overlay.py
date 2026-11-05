@@ -14,23 +14,12 @@ def display_label(value: str) -> str:
     return value
 
 
-def _body_view(page, view_name):
-    for key in (f"body_diagram_{view_name}", view_name):
-        if isinstance(page.get(key), dict):
-            return page[key]
-    return None
-
-
-def _label_position(polygon, shape):
-    mask = np.zeros(shape, dtype=np.uint8)
-    cv2.fillPoly(mask, [polygon], 255)
-    distance = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
-    y, x = np.unravel_index(int(distance.argmax()), distance.shape)
-    return x, y
-
-
-def overlay(page, image, checkboxResults, bodyResults=None):
-    h, w = page["dimensions"]
+def overlay(page, image, checkboxResults=None):
+    if checkboxResults is None:
+        checkboxResults = {}
+    h, w = image.shape[:2]
+    ref_h, ref_w = page["dimensions"]
+    render_scale = w / ref_w if ref_w else 1.0
     vis = image.copy()
 
     words = (
@@ -51,16 +40,17 @@ def overlay(page, image, checkboxResults, bodyResults=None):
         label = display_label(value)
         label += f" ({checkboxResults[value]["label"]})" if value in checkboxResults else ""
 
-        MIN_SCALE = 0.25
-        MAX_SCALE = 0.45
-        CHAR_WIDTH_PX = 7
-        MIN_TEXT_Y = 12
-        TEXT_Y_OFFSET = 2
+        MIN_SCALE = 0.25 * render_scale
+        MAX_SCALE = 0.45 * render_scale
+        CHAR_WIDTH_PX = 7 * render_scale
+        MIN_TEXT_Y = 12 * render_scale
+        TEXT_Y_OFFSET = 2 * render_scale
         scale = max(MIN_SCALE, min(MAX_SCALE, (px1 - px0) / max(len(label) * CHAR_WIDTH_PX, 1)))
-        text_y = max(MIN_TEXT_Y, py0 - TEXT_Y_OFFSET)
+        text_y = int(max(MIN_TEXT_Y, py0 - TEXT_Y_OFFSET))
+        thickness = max(1, round(render_scale))
 
-        cv2.rectangle(vis, (px0, py0), (px1, py1), color, 1)
-        cv2.putText(vis, label, (px0, text_y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, 1, cv2.LINE_AA)
+        cv2.rectangle(vis, (px0, py0), (px1, py1), color, thickness)
+        cv2.putText(vis, label, (px0, text_y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness, cv2.LINE_AA)
 
     for view_name, view_results in (bodyResults or {}).items():
         view = _body_view(page, view_name)
