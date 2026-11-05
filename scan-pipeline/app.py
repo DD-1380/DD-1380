@@ -30,20 +30,21 @@ def format_body_results(results: dict) -> str:
 async def process_async(
     source_file: str,
     raw: np.ndarray,
-) -> tuple[np.ndarray, np.ndarray, str]:
+) -> tuple[np.ndarray, np.ndarray, str, list]:
     source = json.loads(Path(source_file).read_text())
     raw_bytes = cv2.imencode(
         ".jpg", cv2.cvtColor(raw, cv2.COLOR_RGB2BGR),
     )[1].tobytes()
-    transformed, overlayed, results = await process_document(source, raw_bytes)
+    transformed, overlayed, results, debug_images = await process_document(source, raw_bytes)
     return (
         bgr_to_rgb(transformed),
         bgr_to_rgb(overlayed),
         format_body_results(results["body_diagram"]),
+        [(bgr_to_rgb(image), title) for image, title in debug_images],
     )
 
 # processes the document synchronously with process_async()
-def process(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, str]:
+def process(source_file: str, raw: np.ndarray) -> tuple[np.ndarray, np.ndarray, str, list]:
     if not source_file or raw is None:
         raise gr.Error("Upload a source JSON and a raw photo.")
     return asyncio.run(process_async(source_file, raw))
@@ -67,10 +68,16 @@ with gr.Blocks(title="Scan Pipeline") as demo:
         lines=22,
         interactive=False,
     )
+    body_debug_out = gr.Gallery(
+        label="Body diagram intermediate values",
+        columns=4,
+        object_fit="contain",
+        height="auto",
+    )
     process_btn.click(
         process,
         [source, raw],
-        [transformed_out, overlayed_out, body_results_out],
+        [transformed_out, overlayed_out, body_results_out, body_debug_out],
     )
 
 if __name__ == "__main__":

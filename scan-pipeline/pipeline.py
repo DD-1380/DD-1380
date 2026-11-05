@@ -49,7 +49,7 @@ def get_field_locations(source: dict):
 async def process_document(
     source: dict,
     raw_bytes: bytes,
-) -> tuple[np.ndarray, np.ndarray, dict]:
+) -> tuple[np.ndarray, np.ndarray, dict, list]:
     scan_bytes = await asyncio.to_thread(scan, raw_bytes)
     scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
 
@@ -60,10 +60,11 @@ async def process_document(
     textBoxes, checkboxWords = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
     bodyResults = {}
+    bodyDebugImages = []
     try:
-        bodyResults = process_body_diagram(flat, source)
+        bodyResults = process_body_diagram(flat, source, bodyDebugImages)
     except Exception:
         logging.getLogger(__name__).exception("Body diagram classification failed")
     
     results = {"checkboxes": checkboxResults, "body_diagram": bodyResults}
-    return flat, overlay(source, flat, checkboxResults), results
+    return flat, overlay(source, flat, checkboxResults), results, bodyDebugImages

@@ -1,5 +1,4 @@
 import base64
-import json
 import logging
 
 import cv2
@@ -8,16 +7,13 @@ import numpy as np
 LOGGER = logging.getLogger(__name__)
 
 BODY_CFG = {
-    "min_blob_area": 15,
-    "outline_dilate": 7,
-    "merge_dilate": 7,
-    "region_dilate": 5,
-    "overlap_px": 10,
-    "overlap_frac": 0.5,
+    "min_blob_area": 10, # min pixels for it be a valid blob
+    "outline_dilate": 5, # how much to dialate the tempate outline
+    "merge_dilate": 6, # how much connected components are merged together
+    "region_dilate": 5, # expand the region polygons
+    "overlap_px": 10, # how much pixel overlap for the body part to be true
+    "overlap_frac": 0.5, # how much fraction overlap for the body part to be true
 }
-
-_PREPARED_CACHE = {}
-
 
 def _ellipse(size):
     return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (size, size))
@@ -41,13 +37,6 @@ def _view_definition(source_json, view_name):
 
 
 def _prepare(source_json):
-    cache_key = json.dumps(
-        {key: _view_definition(source_json, key) for key in ("front", "back")},
-        sort_keys=True,
-    )
-    if cache_key in _PREPARED_CACHE:
-        return _PREPARED_CACHE[cache_key]
-
     prepared = {}
     for view_name in ("front", "back"):
         view = _view_definition(source_json, view_name)
@@ -82,7 +71,6 @@ def _prepare(source_json):
         except (KeyError, TypeError, ValueError, base64.binascii.Error) as error:
             LOGGER.warning("Skipping body diagram %s: invalid source data: %s", view_name, error)
 
-    _PREPARED_CACHE[cache_key] = prepared
     return prepared
 
 
@@ -95,29 +83,48 @@ def _region_masks(polygons, shape):
     return masks
 
 
-def classify_view(crop_gray, template_gray, region_masks, cfg=BODY_CFG):
+def _append_debug(debug_images, image, title):
+    if debug_images is None:
+        return
+    if image.ndim == 2:
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    debug_images.append((image.copy(), title))
+
+
+def classify_view(crop_gray, template_gray, region_masks, cfg=BODY_CFG, debug_images=None):
     if template_gray.shape != crop_gray.shape:
         LOGGER.warning("Resizing body diagram template from %s to %s", template_gray.shape, crop_gray.shape)
         template_gray = cv2.resize(
             template_gray, crop_gray.shape[::-1], interpolation=cv2.INTER_NEAREST,
         )
 
+    _append_debug(debug_images, crop_gray, "Grayscale crop")
     _, template_ink = cv2.threshold(template_gray, 127, 255, cv2.THRESH_BINARY_INV)
+    _append_debug(debug_images, template_ink, "Template ink")
     fat_template = cv2.dilate(template_ink, _ellipse(cfg["outline_dilate"]))
+    _append_debug(debug_images, fat_template, "Dilated template outline")
     blurred = cv2.GaussianBlur(crop_gray, (3, 3), 0)
+    _append_debug(debug_images, blurred, "Blurred crop")
     _, scan = cv2.threshold(
         blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU,
     )
+    _append_debug(debug_images, scan, "Thresholded scan ink")
     ink = cv2.bitwise_and(scan, cv2.bitwise_not(fat_template))
+    _append_debug(debug_images, ink, "After template subtraction")
     ink = cv2.morphologyEx(ink, cv2.MORPH_CLOSE, _ellipse(3))
+    _append_debug(debug_images, ink, "After morphological close")
     ink = cv2.morphologyEx(ink, cv2.MORPH_OPEN, _ellipse(3))
+    _append_debug(debug_images, ink, "Cleaned medic ink")
 
     merged = cv2.dilate(ink, _ellipse(cfg["merge_dilate"]))
+    _append_debug(debug_images, merged, "Merged ink blobs")
     count, labels = cv2.connectedComponents(merged, connectivity=8)
     labels_ink = np.where(ink > 0, labels, 0)
     area = np.bincount(labels_ink.ravel(), minlength=count)
     valid = area >= cfg["min_blob_area"]
     valid[0] = False
+    valid_blob_ink = np.where(valid[labels_ink], 255, 0).astype(np.uint8)
+    _append_debug(debug_images, valid_blob_ink, "Valid blobs after area filter")
 
     results = {}
     for name, mask in region_masks.items():
@@ -131,7 +138,7 @@ def classify_view(crop_gray, template_gray, region_masks, cfg=BODY_CFG):
     return results
 
 
-def process_body_diagram(aligned_page, source_json):
+def process_body_diagram(aligned_page, source_json, debug_images=None):
     prepared = _prepare(source_json)
     results = {}
     height, width = aligned_page.shape[:2]
@@ -147,5 +154,16 @@ def process_body_diagram(aligned_page, source_json):
         masks = view["region_masks"]
         if crop_gray.shape != view["template"].shape:
             masks = _region_masks(view["polygons"], crop_gray.shape)
-        results[view_name] = classify_view(crop_gray, view["template"], masks)
+        view_debug = [] if debug_images is not None else None
+        results[view_name] = classify_view(
+            crop_gray,
+            view["template"],
+            masks,
+            debug_images=view_debug,
+        )
+        if debug_images is not None:
+            debug_images.extend(
+                (image, f"{view_name.title()} - {title}")
+                for image, title in view_debug
+            )
     return results
