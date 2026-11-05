@@ -82,7 +82,7 @@ async def process_document(
         for region_name, result in view_results.items():
             fields[f"field_injury_{view_name}_{region_name}"] = result["marked"]
     
-    return flat, overlay(source, flat, checkboxResults), fields, checkboxResults
+    return flat, overlay(source, flat, checkboxResults, bodyResults), fields, checkboxResults
 
 _sources = {}
 
