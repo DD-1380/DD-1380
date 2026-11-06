@@ -52,6 +52,14 @@ def crop_to_data_url(image_crop: np.ndarray) -> str:
 HUMAN_INPUT = "human input requested"
 
 
+def _message_text(message) -> str:
+    extra = getattr(message, "model_extra", None) or {}
+    parts = [message.content or ""]
+    for key in ("thinking", "reasoning", "reasoning_content"):
+        parts.append(getattr(message, key, None) or extra.get(key) or "")
+    return "\n".join(str(part).strip() for part in parts if str(part).strip()).strip()
+
+
 def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarray) -> str:
     prompt = (
         "You are checking two OCR readings of one form field. "
@@ -83,11 +91,11 @@ def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarr
             "reasoning_effort": os.environ.get("OCR_LLM_REASONING_EFFORT", "none"),
         },
     )
-    text = (response.choices[0].message.content or "").strip()
-    folded = text.strip()
-    marker = folded.lower().rfind("choice:")
-    value = folded[marker + len("choice:"):].strip() if marker != -1 else folded
-    value = value.splitlines()[0].strip().strip('"').strip("'")
+    text = _message_text(response.choices[0].message)
+    marker = text.lower().rfind("choice:")
+    value = text[marker + len("choice:"):].strip() if marker != -1 else text
+    lines = [line.strip().strip('"').strip("'") for line in value.splitlines() if line.strip()]
+    value = lines[0] if lines else ""
     if value.lower() == HUMAN_INPUT:
         return HUMAN_INPUT
     if value.upper() == "A":
