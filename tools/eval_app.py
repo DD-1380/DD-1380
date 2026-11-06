@@ -5,9 +5,9 @@ and compares TrOCR with the LLM reader and with the truth files when there are a
     python tools/eval_app.py front_source.json back_source.json
 
 Runs each card exactly like eval_cards.py (pipeline.process_card), once with
-TrOCR and, if ticked, once more with the LLM. Upload photos named like
-#38_Front_Case1.HEIC / #38_Back_Case1.HEIC. Cards without a truth file are
-still read and scored, just not compared.
+TrOCR and, if ticked, once more with the LLM. Upload the blank front and back
+forms, then photos named like #38_Front_Case1.HEIC / #38_Back_Case1.HEIC.
+Cards without a truth file are still read and scored, just not compared.
 """
 import asyncio
 import contextlib
@@ -21,6 +21,7 @@ from pathlib import Path
 
 import cv2
 import gradio as gr
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,12 +61,31 @@ def backend(name: str):
             os.environ["OCR_BACKEND"] = old
 
 
+def to_bgr(image: np.ndarray | None) -> np.ndarray | None:
+    if image is None:
+        return None
+    if image.ndim == 2:
+        return cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    if image.shape[2] == 4:
+        return cv2.cvtColor(image, cv2.COLOR_RGBA2BGR)
+    return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+
+def blank_images(front: np.ndarray | None, back: np.ndarray | None) -> dict:
+    blanks = {}
+    if front is not None:
+        blanks["front"] = to_bgr(front)
+    if back is not None:
+        blanks["back"] = to_bgr(back)
+    return blanks
+
+
 # One full process_card run, the same call eval_cards.py makes.
-def read_card(photos: dict, name: str, times: dict) -> dict:
+def read_card(photos: dict, name: str, times: dict, blanks: dict) -> dict:
     raw = {side: read_image_bytes(path) for side, path in photos.items()}
     start = time.perf_counter()
     with backend(name), contextlib.redirect_stdout(io.StringIO()):
-        card = asyncio.run(pipeline.process_card(raw.get("front"), raw.get("back")))
+        card = asyncio.run(pipeline.process_card(raw.get("front"), raw.get("back"), source_images=blanks))
     times[READER_NAMES[name]] = time.perf_counter() - start
     return card
 
@@ -75,12 +95,12 @@ def load_truth(photo: Path) -> dict | None:
     return json.loads(path.read_text()) if path.exists() else None
 
 
-def run_card(key: str, photos: dict, use_llm: bool) -> dict:
+def run_card(key: str, photos: dict, use_llm: bool, blanks: dict) -> dict:
     times = {}
-    runs = {"TrOCR": read_card(photos, "trocr", times)}
+    runs = {"TrOCR": read_card(photos, "trocr", times, blanks)}
     if use_llm:
         try:
-            runs["LLM"] = read_card(photos, "llm", times)
+            runs["LLM"] = read_card(photos, "llm", times, blanks)
         except Exception as err:
             raise LLMFailed(err) from err
     main = runs["TrOCR"]
@@ -236,22 +256,26 @@ def card_view(key: str, state: dict):
     return draw(card, "front"), draw(card, "back"), "\n\n".join(info), table
 
 
-def run(photo_paths, use_llm):
+def run(photo_paths, use_llm, front_blank, back_blank):
     if not photo_paths:
         raise gr.Error("Upload card photos (named _Front_ / _Back_).")
     photos = [p for p in photo_paths if Path(p).suffix.lower() in IMAGE_TYPES]
     pairs = pair_photos(photos)
     if not pairs:
         raise gr.Error("No photos with Front or Back in the name.")
+    blanks = blank_images(front_blank, back_blank)
+    missing = sorted({side for sides in pairs.values() for side in sides if side not in blanks})
+    if missing:
+        raise gr.Error("Upload the blank " + " and ".join(missing) + " form.")
     state, notes = {"cards": {}}, []
     for n, (key, sides) in enumerate(sorted(pairs.items()), 1):
         try:
-            card = run_card(key, sides, use_llm)
+            card = run_card(key, sides, use_llm, blanks)
         except LLMFailed as err:
             notes.append(f"LLM reader failed ({err}), continuing with TrOCR only.")
             use_llm = False
             try:
-                card = run_card(key, sides, use_llm)
+                card = run_card(key, sides, use_llm, blanks)
             except Exception as err:
                 notes.append(f"skip {key}: {err}")
                 continue
@@ -268,6 +292,10 @@ def run(photo_paths, use_llm):
 
 
 with gr.Blocks(title="DD-1380 Scoring Demo") as demo:
+    gr.Markdown("Upload the blank front and back once. Every card is aligned to those forms.")
+    with gr.Row():
+        front_blank = gr.Image(label="Blank front form", type="numpy", sources=["upload"])
+        back_blank = gr.Image(label="Blank back form", type="numpy", sources=["upload"])
     with gr.Row():
         photo_paths = gr.Files(label="Card photos (front and back)", file_types=sorted(IMAGE_TYPES),
                                type="filepath", scale=4)
@@ -284,7 +312,8 @@ with gr.Blocks(title="DD-1380 Scoring Demo") as demo:
         back = gr.Image(label="Back", type="numpy", interactive=False)
 
     state = gr.State({})
-    run_btn.click(run, [photo_paths, use_llm], [summary, card_pick, front, back, info, table, state])
+    run_btn.click(run, [photo_paths, use_llm, front_blank, back_blank],
+                  [summary, card_pick, front, back, info, table, state])
     card_pick.input(card_view, [card_pick, state], [front, back, info, table])
 
 if __name__ == "__main__":
