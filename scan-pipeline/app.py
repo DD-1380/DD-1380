@@ -15,6 +15,7 @@ from pipeline import process_card
 READERS = [
     (llm_ocr.DEFAULT_MODEL, "llm"),
     (trocr_backend.MODEL_NAME, "trocr"),
+    ("union", "union"),
 ]
 
 
@@ -23,7 +24,7 @@ def reader_backend(name: str):
     old_backend = os.environ.get("OCR_BACKEND")
     old_model = os.environ.get("OCR_LLM_MODEL")
     os.environ["OCR_BACKEND"] = name
-    if name == "llm":
+    if name in ("llm", "union"):
         os.environ["OCR_LLM_MODEL"] = llm_ocr.DEFAULT_MODEL
     try:
         yield
@@ -76,8 +77,8 @@ def process(photo: np.ndarray | None, source_file: str | None,
         raise gr.Error("Upload the source JSON to go with the photo.")
     if blank is None:
         raise gr.Error("Upload the blank form to align with feature matching.")
-    if reader not in ("llm", "trocr"):
-        raise gr.Error("Choose a Gemma or TrOCR reader.")
+    if reader not in {value for _, value in READERS}:
+        raise gr.Error("Choose a Gemma, TrOCR, or union reader.")
     try:
         sources = {"front": json.loads(Path(source_file).read_text())}
     except (OSError, ValueError) as error:
