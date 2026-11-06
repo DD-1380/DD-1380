@@ -69,7 +69,7 @@ async def process_document(
             source_image = load_blank_form()
         if source_image is None:
             raise ValueError("Feature alignment needs a blank form image.")
-        flat = await asyncio.to_thread(warp_by_features, scan_img, source_image, source)
+        flat = await asyncio.to_thread(warp_by_features, scan_img, source_image)
     else:
         ocr = await asyncio.to_thread(get_model)
         target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)

@@ -44,32 +44,20 @@ def warp_to_source(scan, source, target, scale: float = WARP_SCALE):
         borderValue=(255, 255, 255),
     )
 
-def warp_by_features(scan, source_image, source, scale: float = WARP_SCALE):
-    h_out, w_out = source["dimensions"]
-    h_out, w_out = round(h_out * scale), round(w_out * scale)
-    aligned = align_to_source(source_image, scan, out_shape=(h_out, w_out))
-    blank = cv2.resize(_bgr(source_image), (w_out, h_out), interpolation=cv2.INTER_AREA)
-    return settle_to_source(blank, aligned)
+def warp_by_features(scan, source_image):
+    return align_to_source(source_image, scan)
 
 
-def align_to_source(source, modified, out_shape=None) -> np.ndarray:
+def align_to_source(source, modified) -> np.ndarray:
     source_gray = _gray(source)
     modified_gray = _gray(modified)
     matrix = _form_homography(source_gray, modified_gray)
     height, width = source_gray.shape
-    if out_shape is not None:
-        out_h, out_w = out_shape
-        onto_output = np.array(
-            [[out_w / width, 0, 0], [0, out_h / height, 0], [0, 0, 1]],
-            dtype=np.float64,
-        )
-        matrix = (onto_output @ matrix).astype(np.float32)
-        height, width = out_h, out_w
     return cv2.warpPerspective(
         _bgr(modified),
         matrix,
         (width, height),
-        flags=cv2.INTER_CUBIC,
+        flags=cv2.INTER_LINEAR,
         borderMode=cv2.BORDER_CONSTANT,
         borderValue=(255, 255, 255),
     )
