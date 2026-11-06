@@ -60,17 +60,19 @@ async def process_document(
     source_image: np.ndarray | None = None,
     align: str | None = None,
 ) -> tuple[np.ndarray, np.ndarray, dict, dict]:
-    scan_bytes = await asyncio.to_thread(scan, raw_bytes)
-    scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
-
     method = align_method(align)
     if method == "features":
         if source_image is None:
             source_image = load_blank_form()
         if source_image is None:
             raise ValueError("Feature alignment needs a blank form image.")
+        scan_img = cv2.imdecode(np.frombuffer(raw_bytes, np.uint8), cv2.IMREAD_COLOR)
+        if scan_img is None:
+            raise ValueError("Could not read the photo.")
         flat = await asyncio.to_thread(warp_by_features, scan_img, source_image)
     else:
+        scan_bytes = await asyncio.to_thread(scan, raw_bytes)
+        scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
         ocr = await asyncio.to_thread(get_model)
         target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
         flat = warp_to_source(scan_img, source, target)
