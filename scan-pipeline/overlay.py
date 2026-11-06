@@ -78,8 +78,8 @@ def overlay(page, image, checkboxResults=None, bodyResults=None):
         for region in view.get("regions", []):
             name = region["name"]
             polygon = np.asarray(region["polygon"], dtype=np.int32)
-            if view.get("coordinate_frame", "full_page_aligned") != "crop_local":
-                polygon += np.asarray([x1, y1], dtype=np.int32)
+            if view.get("coordinate_frame", "full_page_aligned") == "crop_local":
+                polygon = polygon + np.asarray([x1, y1], dtype=np.int32)
             result = view_results.get(name, {"marked": False})
             marked = result["marked"]
             color = (0, 0, 255) if marked else FIELD_COLOR

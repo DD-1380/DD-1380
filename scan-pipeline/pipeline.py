@@ -1,4 +1,5 @@
 import asyncio
+import copy
 import logging
 import os
 import re
@@ -10,7 +11,7 @@ from scan_card import scan
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
 
-from image_transform import warp_to_source
+from image_transform import align_method, load_blank_form, warp_by_features, warp_to_source
 from overlay import overlay
 
 from body_diagram import process_body_diagram
@@ -33,6 +34,38 @@ def get_model():
         if torch.cuda.is_available():
             model = model.cuda()
     return model
+
+# Body-diagram coordinates in front.json are pixels of the source page.
+# Field boxes are already normalized, so they follow the warped photo on their own.
+def diagram_on_page(source: dict, image_shape: tuple) -> dict:
+    page_h, page_w = source["dimensions"]
+    height, width = image_shape[:2]
+    scale_x = width / page_w
+    scale_y = height / page_h
+    moved = copy.deepcopy(source)
+    for name in ("front", "back"):
+        for key in (f"body_diagram_{name}", name):
+            view = moved.get(key)
+            if not isinstance(view, dict):
+                continue
+            if not view.get("bbox") or not view.get("regions") or not view.get("template_png_b64"):
+                continue
+            view["bbox"] = [
+                float(view["bbox"][0]) * scale_x,
+                float(view["bbox"][1]) * scale_y,
+                float(view["bbox"][2]) * scale_x,
+                float(view["bbox"][3]) * scale_y,
+            ]
+            for region in view["regions"]:
+                polygon = region.get("polygon")
+                if polygon is None:
+                    continue
+                region["polygon"] = [
+                    [float(x) * scale_x, float(y) * scale_y] for x, y in polygon
+                ]
+            break
+    return moved
+
 
 # OCRs the page.
 def ocr_page(model, image_bytes: bytes) -> dict:
@@ -57,14 +90,29 @@ def get_field_locations(source: dict):
 async def process_document(
     source: dict,
     raw_bytes: bytes,
+    source_image: np.ndarray | None = None,
+    align: str | None = None,
 ) -> tuple[np.ndarray, np.ndarray, dict, dict]:
-    scan_bytes = await asyncio.to_thread(scan, raw_bytes)
-    scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
+    method = align_method(align)
+    if method == "features":
 
-    ocr = await asyncio.to_thread(get_model)
-    target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
-
-    flat = warp_to_source(scan_img, source, target)
+        if source_image is None:
+            source_image = load_blank_form()
+        if source_image is None:
+            raise ValueError("Feature alignment needs a blank form image.")
+        scan_img = cv2.imdecode(np.frombuffer(raw_bytes, np.uint8), cv2.IMREAD_COLOR)
+        if scan_img is None:
+            raise ValueError("Could not read the photo.")
+        flat = await asyncio.to_thread(warp_by_features, scan_img, source_image)
+        source = diagram_on_page(source, flat.shape)
+    else:
+        scan_bytes = await asyncio.to_thread(scan, raw_bytes)
+        if not scan_bytes:
+            raise ValueError("Could not find the card in the photo.")
+        scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
+        ocr = await asyncio.to_thread(get_model)
+        target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
+        flat = warp_to_source(scan_img, source, target)
 
     checkboxWords, _textBoxes = get_field_locations(source)
     checkboxResults = classify_checkbox(source, flat, checkboxWords)
@@ -113,12 +161,21 @@ def pair_photos(paths) -> dict:
 
 # Runs each side present through process_document and scores the card. A missing side's items are not_scored.
 async def process_card(front_bytes: bytes | None = None, back_bytes: bytes | None = None,
-                       sources: dict | None = None) -> dict:
+                       sources: dict | None = None, source_images: dict | None = None,
+                       align: str | None = None) -> dict:
     sides, fields, checkboxes = {}, {}, {}
+    method = align_method(align)
     for side, raw in (("front", front_bytes), ("back", back_bytes)):
         if raw is None:
             continue
-        flat, overlaid, side_fields, side_boxes = await process_document(get_source(side, sources), raw)
+        blank = None if source_images is None else source_images.get(side)
+        if method == "features" and blank is None:
+            blank = load_blank_form(side)
+        if method == "features" and blank is None:
+            raise ValueError(f"Feature alignment needs a blank {side} form image.")
+        flat, overlaid, side_fields, side_boxes = await process_document(
+            get_source(side, sources), raw, blank, method,
+        )
         sides[side] = {"aligned": flat, "overlay": overlaid, "fields": side_fields, "checkboxes": side_boxes}
         fields.update(side_fields)
         checkboxes.update(side_boxes)
