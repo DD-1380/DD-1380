@@ -75,10 +75,14 @@ def union_fields(aligned_image: np.ndarray, source: dict) -> dict:
         os.environ["OCR_BACKEND"] = "trocr"
         trocr = read_fields(aligned_image, source)
         os.environ["OCR_BACKEND"] = "llm"
+        boxes = get_field_boxes(source)
         keys = list(gemma)
+        crops = {field_key: crop(aligned_image, boxes[field_key]) for field_key in keys}
         with ThreadPoolExecutor(max_workers=workers()) as pool:
             chosen = pool.map(
-                lambda field_key: choose_reading(field_key, gemma[field_key], trocr.get(field_key, "")),
+                lambda field_key: choose_reading(
+                    field_key, gemma[field_key], trocr.get(field_key, ""), crops[field_key],
+                ),
                 keys,
             )
             return dict(zip(keys, chosen))

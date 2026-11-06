@@ -52,27 +52,33 @@ def crop_to_data_url(image_crop: np.ndarray) -> str:
 HUMAN_INPUT = "human input requested"
 
 
-def choose_reading(field_key: str, first: str, second: str) -> str:
+def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarray) -> str:
     prompt = (
         "You are checking two OCR readings of one form field. "
-        f"The field name is '{field_key}'. "
-        "Decide whether the readings are similar, and which one looks more right for that field name. "
+        f"The field name is '{field_key}'. The image is that field's crop. "
+        "Decide whether the readings are similar, and which one looks more right for that field name and for the crop. "
         "An empty reading means that reader saw no text. A blank value can be right when the field is empty. "
         "If one reading looks more right, or the readings are similar, reply with the better one using exactly one of these lines:\n"
         "CHOICE: A\n"
         "CHOICE: B\n"
         "A is the first reading and B is the second. "
-        "If both readings look odd for this field name, reply with exactly:\n"
+        "You may correct a minor mistake even when neither reading matches the crop. "
+        "Reply with only that corrected text as:\n"
+        "CHOICE: <corrected text>\n"
+        "If both readings look odd for this field name and the crop, reply with exactly:\n"
         "CHOICE: human input requested\n"
         "Return nothing else.\n"
         f"Reading A: {first}\n"
         f"Reading B: {second}"
     )
+    content = [{"type": "text", "text": prompt}]
+    if image_crop.size:
+        content.append({"type": "image_url", "image_url": {"url": crop_to_data_url(image_crop)}})
     response = get_client().chat.completions.create(
         model=get_model(),
         temperature=0,
         max_tokens=int(os.environ.get("OCR_LLM_MAX_TOKENS", "64")),
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": content}],
         extra_body={
             "reasoning_effort": os.environ.get("OCR_LLM_REASONING_EFFORT", "none"),
         },
@@ -88,7 +94,7 @@ def choose_reading(field_key: str, first: str, second: str) -> str:
         return first
     if value.upper() == "B":
         return second
-    if value == first or value == second:
+    if value:
         return value
     return HUMAN_INPUT
 
