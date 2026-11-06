@@ -65,7 +65,9 @@ def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarr
         "You are checking two OCR readings of one form field. "
         f"The field name is '{field_key}'. The image is that field's crop. "
         "Decide whether the readings are similar, and which one looks more right for that field name and for the crop. "
-        "An empty reading means that reader saw no text. A blank value can be right when the field is empty. "
+        "An empty reading means that reader saw no text. "
+        "If the crop is blank, leave the field blank. Reply with exactly:\n"
+        "CHOICE:\n"
         "If one reading looks more right, or the readings are similar, reply with the better one using exactly one of these lines:\n"
         "CHOICE: A\n"
         "CHOICE: B\n"
@@ -93,7 +95,8 @@ def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarr
     )
     text = _message_text(response.choices[0].message)
     marker = text.lower().rfind("choice:")
-    value = text[marker + len("choice:"):].strip() if marker != -1 else text
+    chose = marker != -1
+    value = text[marker + len("choice:"):].strip() if chose else text
     lines = [line.strip().strip('"').strip("'") for line in value.splitlines() if line.strip()]
     value = lines[0] if lines else ""
     if value.lower() == HUMAN_INPUT:
@@ -104,7 +107,7 @@ def choose_reading(field_key: str, first: str, second: str, image_crop: np.ndarr
         return second
     if value:
         return value
-    return HUMAN_INPUT
+    return "" if chose else HUMAN_INPUT
 
 
 def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
