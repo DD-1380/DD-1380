@@ -1,6 +1,9 @@
 import os
+from contextlib import contextmanager
 
 import numpy as np
+
+READERS = ("llm", "trocr", "union")
 
 doctr_model = None
 
@@ -48,6 +51,28 @@ def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
     if backend in ("llm", "trocr"):
         return BACKENDS[backend](image_crop, context)
     return BACKENDS[backend](image_crop)
+
+@contextmanager
+def reader_backend(name: str):
+    if name not in READERS:
+        raise ValueError(f"Reader must be one of {', '.join(READERS)}.")
+    old_backend = os.environ.get("OCR_BACKEND")
+    old_model = os.environ.get("OCR_LLM_MODEL")
+    os.environ["OCR_BACKEND"] = name
+    if name in ("llm", "union"):
+        import llm_ocr
+        os.environ["OCR_LLM_MODEL"] = llm_ocr.DEFAULT_MODEL
+    try:
+        yield
+    finally:
+        if old_backend is None:
+            os.environ.pop("OCR_BACKEND", None)
+        else:
+            os.environ["OCR_BACKEND"] = old_backend
+        if old_model is None:
+            os.environ.pop("OCR_LLM_MODEL", None)
+        else:
+            os.environ["OCR_LLM_MODEL"] = old_model
 
 def workers() -> int:
     backend = os.environ.get("OCR_BACKEND", "llm")

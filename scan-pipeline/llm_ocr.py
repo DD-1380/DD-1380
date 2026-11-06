@@ -49,6 +49,50 @@ def crop_to_data_url(image_crop: np.ndarray) -> str:
     return f"data:image/jpeg;base64,{b64}"
 
 
+HUMAN_INPUT = "human input requested"
+
+
+def choose_reading(field_key: str, first: str, second: str) -> str:
+    prompt = (
+        "You are checking two OCR readings of one form field. "
+        f"The field name is '{field_key}'. "
+        "Decide whether the readings are similar, and which one looks more right for that field name. "
+        "An empty reading means that reader saw no text. A blank value can be right when the field is empty. "
+        "If one reading looks more right, or the readings are similar, reply with the better one using exactly one of these lines:\n"
+        "CHOICE: A\n"
+        "CHOICE: B\n"
+        "A is the first reading and B is the second. "
+        "If both readings look odd for this field name, reply with exactly:\n"
+        "CHOICE: human input requested\n"
+        "Return nothing else.\n"
+        f"Reading A: {first}\n"
+        f"Reading B: {second}"
+    )
+    response = get_client().chat.completions.create(
+        model=get_model(),
+        temperature=0,
+        max_tokens=int(os.environ.get("OCR_LLM_MAX_TOKENS", "64")),
+        messages=[{"role": "user", "content": prompt}],
+        extra_body={
+            "reasoning_effort": os.environ.get("OCR_LLM_REASONING_EFFORT", "none"),
+        },
+    )
+    text = (response.choices[0].message.content or "").strip()
+    folded = text.strip()
+    marker = folded.lower().rfind("choice:")
+    value = folded[marker + len("choice:"):].strip() if marker != -1 else folded
+    value = value.splitlines()[0].strip().strip('"').strip("'")
+    if value.lower() == HUMAN_INPUT:
+        return HUMAN_INPUT
+    if value.upper() == "A":
+        return first
+    if value.upper() == "B":
+        return second
+    if value == first or value == second:
+        return value
+    return HUMAN_INPUT
+
+
 def ocr(image_crop: np.ndarray, context: str | None = None) -> str:
     if image_crop.size == 0:
         return ""

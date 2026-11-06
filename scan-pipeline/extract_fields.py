@@ -7,10 +7,8 @@ import cv2
 import numpy as np
 
 from injury_crop import is_injury_field
+from llm_ocr import choose_reading
 from ocr_backends import ocr, workers
-
-# Shown when Gemma and TrOCR do not read the same text.
-DISAGREE = "human input"
 
 # Printed labels that sit inside a field's box, stripped from the start of its reading.
 PRINTED_LABELS = {
@@ -76,15 +74,19 @@ def union_fields(aligned_image: np.ndarray, source: dict) -> dict:
         gemma = read_fields(aligned_image, source)
         os.environ["OCR_BACKEND"] = "trocr"
         trocr = read_fields(aligned_image, source)
+        os.environ["OCR_BACKEND"] = "llm"
+        keys = list(gemma)
+        with ThreadPoolExecutor(max_workers=workers()) as pool:
+            chosen = pool.map(
+                lambda field_key: choose_reading(field_key, gemma[field_key], trocr.get(field_key, "")),
+                keys,
+            )
+            return dict(zip(keys, chosen))
     finally:
         if saved is None:
             os.environ.pop("OCR_BACKEND", None)
         else:
             os.environ["OCR_BACKEND"] = saved
-    return {
-        field_key: text if text == trocr.get(field_key) else DISAGREE
-        for field_key, text in gemma.items()
-    }
 
 # Takes aligned image and source JSON, returns extracted field dict.
 # Output keys are the field_key names from source.json

@@ -1,13 +1,12 @@
 import asyncio
 import time
-import uuid
-from typing import Dict, Any, Optional
-from fastapi import FastAPI, Request, HTTPException, status, BackgroundTasks
-from pydantic import BaseModel
-import numpy as np
-import cv2
+from typing import Any, Dict
 
-# Import your existing pipeline function
+import cv2
+import numpy as np
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, status
+
+from ocr_backends import READERS, reader_backend
 from pipeline import process_document
 
 app = FastAPI(title="DD1380 Transcriptions API")
@@ -16,28 +15,37 @@ app = FastAPI(title="DD1380 Transcriptions API")
 job_store: Dict[str, Dict[str, Any]] = {}
 
 source_store: Dict[str, Any] = {"source": None}
+blank_store: Dict[str, Any] = {"image": None}
+_ocr_lock = asyncio.Lock()
 
-async def run_ocr_background(job_id: str, raw_bytes: bytes, source_dict: dict):
+def decode_image(raw_bytes: bytes) -> np.ndarray:
+    image = cv2.imdecode(np.frombuffer(raw_bytes, np.uint8), cv2.IMREAD_COLOR)
+    if image is None:
+        raise ValueError("Could not read the image.")
+    return image
+
+async def run_ocr_background(job_id: str, raw_bytes: bytes, source_dict: dict,
+                             blank: np.ndarray, reader: str):
     try:
-        # Run your pipeline's async process_document function
-        # process_document returns: flat, overlay_img, fields, checkboxResults
-        flat, overlay_img, fields, checkboxResults = await process_document(source_dict, raw_bytes)
-        
-        # Store successful results
+        # One side, feature-aligned to the blank form. Readers share process env, so jobs run one at a time.
+        async with _ocr_lock:
+            with reader_backend(reader):
+                _flat, _overlay_img, fields, checkboxResults = await process_document(
+                    source_dict, raw_bytes, blank, "features",
+                )
         job_store[job_id] = {
             "status": "done",
             "result": {
                 "fields": fields,
-                "checkboxes": checkboxResults
+                "checkboxes": checkboxResults,
             },
-            "error": None
+            "error": None,
         }
     except Exception as e:
-        # Handle failures gracefully with a meaningful error message
         job_store[job_id] = {
             "status": "failed",
             "result": None,
-            "error": str(e)
+            "error": str(e),
         }
 
 @app.put("/source")
@@ -48,33 +56,45 @@ async def upload_source(source: Dict[str, Any]):
     source_store["source"] = source
     return {"status": "stored"}
 
-@app.post("/jobs/{job_uuid}", status_code=status.HTTP_202_ACCEPTED)
-async def create_job(job_uuid: str, request: Request, background_tasks: BackgroundTasks = BackgroundTasks()):
-    """
-    1. BATDOK uploads images with a job UUID they generate.
-    2. We reply with 202 Accepted right away.
-    """
-    source_dict = source_store["source"]
-    if source_dict is None:
-        raise HTTPException(status_code=409, detail="No source JSON uploaded. PUT it to /source first.")
-
-    # Read the raw image bytes directly from the request body
+@app.put("/blank")
+async def upload_blank(request: Request):
+    """Upload the blank form for this one side. Jobs use the most recent upload."""
     raw_bytes = await request.body()
-    
     if not raw_bytes:
         raise HTTPException(status_code=400, detail="No image data received.")
-    
-    # Initialize job status as working
+    try:
+        blank_store["image"] = decode_image(raw_bytes)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+    return {"status": "stored"}
+
+@app.post("/jobs/{job_uuid}", status_code=status.HTTP_202_ACCEPTED)
+async def create_job(job_uuid: str, request: Request, reader: str = "llm",
+                     background_tasks: BackgroundTasks = BackgroundTasks()):
+    """
+    One card side. BATDOK uploads the photo with a job UUID they generate.
+    reader is llm, trocr, or union. Reply is 202 Accepted.
+    """
+    if reader not in READERS:
+        raise HTTPException(status_code=422, detail=f"Reader must be one of {', '.join(READERS)}.")
+    source_dict = source_store["source"]
+    blank = blank_store["image"]
+    if source_dict is None:
+        raise HTTPException(status_code=409, detail="No source JSON uploaded. PUT it to /source first.")
+    if blank is None:
+        raise HTTPException(status_code=409, detail="No blank form uploaded. PUT it to /blank first.")
+
+    raw_bytes = await request.body()
+    if not raw_bytes:
+        raise HTTPException(status_code=400, detail="No image data received.")
+
     job_store[job_uuid] = {
         "status": "working",
         "result": None,
-        "error": None
+        "error": None,
     }
-    
-    # Kick off processing in the background
-    background_tasks.add_task(run_ocr_background, job_uuid, raw_bytes, source_dict)
-    
-    return {"status": "accepted", "job_uuid": job_uuid}
+    background_tasks.add_task(run_ocr_background, job_uuid, raw_bytes, source_dict, blank.copy(), reader)
+    return {"status": "accepted", "job_uuid": job_uuid, "reader": reader}
 
 @app.get("/jobs/{job_uuid}")
 def get_job(job_uuid: str, wait: int = 0):

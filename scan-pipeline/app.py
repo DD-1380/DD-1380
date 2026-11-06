@@ -1,7 +1,5 @@
 import asyncio
 import json
-import os
-from contextlib import contextmanager
 from pathlib import Path
 
 import cv2
@@ -10,33 +8,14 @@ import numpy as np
 
 import llm_ocr
 import trocr_backend
+from ocr_backends import READERS, reader_backend
 from pipeline import process_card
 
-READERS = [
+READER_CHOICES = [
     (llm_ocr.DEFAULT_MODEL, "llm"),
     (trocr_backend.MODEL_NAME, "trocr"),
     ("union", "union"),
 ]
-
-
-@contextmanager
-def reader_backend(name: str):
-    old_backend = os.environ.get("OCR_BACKEND")
-    old_model = os.environ.get("OCR_LLM_MODEL")
-    os.environ["OCR_BACKEND"] = name
-    if name in ("llm", "union"):
-        os.environ["OCR_LLM_MODEL"] = llm_ocr.DEFAULT_MODEL
-    try:
-        yield
-    finally:
-        if old_backend is None:
-            os.environ.pop("OCR_BACKEND", None)
-        else:
-            os.environ["OCR_BACKEND"] = old_backend
-        if old_model is None:
-            os.environ.pop("OCR_LLM_MODEL", None)
-        else:
-            os.environ["OCR_LLM_MODEL"] = old_model
 
 # converts BGR to RGB.
 def bgr_to_rgb(image: np.ndarray) -> np.ndarray:
@@ -77,7 +56,7 @@ def process(photo: np.ndarray | None, source_file: str | None,
         raise gr.Error("Upload the source JSON to go with the photo.")
     if blank is None:
         raise gr.Error("Upload the blank form to align with feature matching.")
-    if reader not in {value for _, value in READERS}:
+    if reader not in READERS:
         raise gr.Error("Choose a Gemma, TrOCR, or union reader.")
     try:
         sources = {"front": json.loads(Path(source_file).read_text())}
@@ -93,7 +72,7 @@ with gr.Blocks(title="Scan Pipeline") as demo:
     photo = gr.Image(label="Photo", type="numpy", sources=["upload", "webcam"])
     source = gr.File(label="Source OCR JSON", file_types=[".json"])
     reader = gr.Radio(
-        choices=READERS,
+        choices=READER_CHOICES,
         value="llm",
         label="Reader",
     )
