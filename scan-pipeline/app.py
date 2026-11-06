@@ -21,15 +21,20 @@ def to_bgr(image: np.ndarray | None) -> np.ndarray | None:
         return cv2.cvtColor(image, cv2.COLOR_RGBA2BGR)
     return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-def to_bytes(image: np.ndarray | None) -> bytes | None:
+def to_bytes(image: np.ndarray | None, lossless: bool = False) -> bytes | None:
     if image is None:
         return None
-    return cv2.imencode(".jpg", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))[1].tobytes()
+    # Feature matching needs the uploaded pixels. DocTR keeps the JPEG it had.
+    ext = ".png" if lossless else ".jpg"
+    return cv2.imencode(ext, cv2.cvtColor(image, cv2.COLOR_RGB2BGR))[1].tobytes()
 
 # processes the card asynchronously with process_card()
 async def process_async(front: np.ndarray | None, back: np.ndarray | None, sources: dict,
                         blanks: dict, align: str):
-    card = await process_card(to_bytes(front), to_bytes(back), sources, blanks, align)
+    lossless = align == "features"
+    card = await process_card(
+        to_bytes(front, lossless), to_bytes(back, lossless), sources, blanks, align,
+    )
     images = []
     for side in ("front", "back"):
         result = card["sides"].get(side)
@@ -69,7 +74,7 @@ def process(front: np.ndarray | None, back: np.ndarray | None,
 
 # creates the gradio interface.
 with gr.Blocks(title="Scan Pipeline") as demo:
-    gr.Markdown("Upload the front and back of a card, each with its source OCR JSON, to scan, align, read and score it. Either side can be left out, but a photo needs its source JSON. Feature matching aligns to a blank form instead of DocTR.")
+    gr.Markdown("Upload the front and back of a card, each with its source OCR JSON. Feature matching warps the original photo onto the blank form. DocTR finds the card first, then aligns by words. Either side can be left out, but a photo needs its source JSON.")
     with gr.Row():
         front = gr.Image(label="Front photo", type="numpy", sources=["upload", "webcam"])
         back = gr.Image(label="Back photo", type="numpy", sources=["upload", "webcam"])

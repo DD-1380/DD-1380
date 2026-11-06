@@ -8,7 +8,8 @@ LOGGER = logging.getLogger(__name__)
 
 BODY_CFG = {
     "min_blob_area": 10, # min pixels for it be a valid blob
-    "outline_dilate": 5, # how much to dialate the tempate outline
+    "outline_dilate": 4, # how much to dialate the tempate outline
+    "align_radius": 4, # search window, in template pixels, used to seat the figure on the template
     "merge_dilate": 6, # how much connected components are merged together
     "region_dilate": 5, # expand the region polygons
     "overlap_px": 10, # how much pixel overlap for the body part to be true
@@ -91,12 +92,52 @@ def _append_debug(debug_images, image, title):
     debug_images.append((image.copy(), title))
 
 
+def _extra_ink_count(crop_gray, template_gray, cfg):
+    _, template_ink = cv2.threshold(template_gray, 127, 255, cv2.THRESH_BINARY_INV)
+    fat_template = cv2.dilate(template_ink, _ellipse(cfg["outline_dilate"]))
+    blurred = cv2.GaussianBlur(crop_gray, (3, 3), 0)
+    _, scan = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    ink = cv2.bitwise_and(scan, cv2.bitwise_not(fat_template))
+    ink = cv2.morphologyEx(ink, cv2.MORPH_CLOSE, _ellipse(3))
+    ink = cv2.morphologyEx(ink, cv2.MORPH_OPEN, _ellipse(3))
+    return int(cv2.countNonZero(ink))
+
+
+# The photo figure sits a few pixels off the template. A wide outline hides that
+# gap, and it also hides a mark drawn on the printed line.
+def _seat_on_template(crop_gray, template_gray, cfg):
+    radius = int(cfg.get("align_radius", 0))
+    if radius <= 0:
+        return crop_gray
+    best = crop_gray
+    best_count = _extra_ink_count(crop_gray, template_gray, cfg)
+    height, width = crop_gray.shape
+    for dy in range(-radius, radius + 1):
+        for dx in range(-radius, radius + 1):
+            if dx == 0 and dy == 0:
+                continue
+            shifted = cv2.warpAffine(
+                crop_gray,
+                np.float32([[1, 0, dx], [0, 1, dy]]),
+                (width, height),
+                flags=cv2.INTER_LINEAR,
+                borderMode=cv2.BORDER_CONSTANT,
+                borderValue=255,
+            )
+            count = _extra_ink_count(shifted, template_gray, cfg)
+            if count < best_count:
+                best_count = count
+                best = shifted
+    return best
+
+
 def classify_view(crop_gray, template_gray, region_masks, cfg=BODY_CFG, debug_images=None):
     if template_gray.shape != crop_gray.shape:
         LOGGER.warning("Resizing body diagram template from %s to %s", template_gray.shape, crop_gray.shape)
         template_gray = cv2.resize(
             template_gray, crop_gray.shape[::-1], interpolation=cv2.INTER_NEAREST,
         )
+    crop_gray = _seat_on_template(crop_gray, template_gray, cfg)
 
     _append_debug(debug_images, crop_gray, "Grayscale crop")
     _, template_ink = cv2.threshold(template_gray, 127, 255, cv2.THRESH_BINARY_INV)
@@ -152,8 +193,22 @@ def process_body_diagram(aligned_page, source_json, debug_images=None):
         crop = aligned_page[top:bottom, left:right]
         crop_gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY) if crop.ndim == 3 else crop
         masks = view["region_masks"]
-        if crop_gray.shape != view["template"].shape:
-            masks = _region_masks(view["polygons"], crop_gray.shape)
+        template_shape = view["template"].shape
+        if crop_gray.shape != template_shape:
+            # The template is the resolution the regions were drawn at. Stretching
+            # it up to the photo leaves an outline halo and every region looks marked.
+            crop_h, crop_w = crop_gray.shape
+            template_h, template_w = template_shape
+            crop_gray = cv2.resize(
+                crop_gray, (template_w, template_h), interpolation=cv2.INTER_AREA,
+            )
+            scaled = {}
+            for name, polygon in view["polygons"].items():
+                points = np.asarray(polygon, dtype=np.float64).copy()
+                points[:, 0] *= template_w / crop_w
+                points[:, 1] *= template_h / crop_h
+                scaled[name] = np.round(points).astype(np.int32)
+            masks = _region_masks(scaled, template_shape)
         view_debug = [] if debug_images is not None else None
         results[view_name] = classify_view(
             crop_gray,

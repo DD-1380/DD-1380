@@ -1,4 +1,5 @@
 import asyncio
+import copy
 import logging
 import os
 import re
@@ -34,6 +35,38 @@ def get_model():
             model = model.cuda()
     return model
 
+# Body-diagram coordinates in front.json are pixels of the source page.
+# Field boxes are already normalized, so they follow the warped photo on their own.
+def diagram_on_page(source: dict, image_shape: tuple) -> dict:
+    page_h, page_w = source["dimensions"]
+    height, width = image_shape[:2]
+    scale_x = width / page_w
+    scale_y = height / page_h
+    moved = copy.deepcopy(source)
+    for name in ("front", "back"):
+        for key in (f"body_diagram_{name}", name):
+            view = moved.get(key)
+            if not isinstance(view, dict):
+                continue
+            if not view.get("bbox") or not view.get("regions") or not view.get("template_png_b64"):
+                continue
+            view["bbox"] = [
+                float(view["bbox"][0]) * scale_x,
+                float(view["bbox"][1]) * scale_y,
+                float(view["bbox"][2]) * scale_x,
+                float(view["bbox"][3]) * scale_y,
+            ]
+            for region in view["regions"]:
+                polygon = region.get("polygon")
+                if polygon is None:
+                    continue
+                region["polygon"] = [
+                    [float(x) * scale_x, float(y) * scale_y] for x, y in polygon
+                ]
+            break
+    return moved
+
+
 # OCRs the page.
 def ocr_page(model, image_bytes: bytes) -> dict:
     doc = DocumentFile.from_images(image_bytes)
@@ -62,6 +95,7 @@ async def process_document(
 ) -> tuple[np.ndarray, np.ndarray, dict, dict]:
     method = align_method(align)
     if method == "features":
+
         if source_image is None:
             source_image = load_blank_form()
         if source_image is None:
@@ -70,8 +104,11 @@ async def process_document(
         if scan_img is None:
             raise ValueError("Could not read the photo.")
         flat = await asyncio.to_thread(warp_by_features, scan_img, source_image)
+        source = diagram_on_page(source, flat.shape)
     else:
         scan_bytes = await asyncio.to_thread(scan, raw_bytes)
+        if not scan_bytes:
+            raise ValueError("Could not find the card in the photo.")
         scan_img = cv2.imdecode(np.frombuffer(scan_bytes, np.uint8), cv2.IMREAD_COLOR)
         ocr = await asyncio.to_thread(get_model)
         target = await asyncio.to_thread(ocr_page, ocr, scan_bytes)
